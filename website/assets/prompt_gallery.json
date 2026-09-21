@@ -1,0 +1,66 @@
+{
+  "rubric": [
+    { "id": "calls_real_path", "label": "Calls real path", "hint": "Uses run_cached_pipeline or project API" },
+    { "id": "fixed_example", "label": "Fixed example", "hint": "Binds examples/case_001" },
+    { "id": "observable_asserts", "label": "Observable asserts", "hint": "Checks files, shapes, labels, Dice — not assert True" },
+    { "id": "regression_anchor", "label": "Regression anchor", "hint": "Compares to metrics.json or hash" },
+    { "id": "failure_modes", "label": "Failure modes", "hint": "Invalid / missing input coverage" },
+    { "id": "tutorial_constraints", "label": "Tutorial constraints", "hint": "No model download, no GPU, CI-friendly" }
+  ],
+  "cases": [
+    {
+      "id": "weak",
+      "title": "Weak prompt",
+      "prompt": "Write some tests for my AI model.",
+      "code": "def test_model_works():\n    # Looks green, proves nothing about the pipeline.\n    assert True\n\n\ndef test_random_dice_looks_ok():\n    import numpy as np\n\n    pred = np.random.randint(0, 6, size=(32, 32, 32))\n    gt = np.random.randint(0, 6, size=(32, 32, 32))\n    overlap = (pred == gt).mean()\n    assert overlap >= 0.0\n",
+      "critique": "assert True always passes. Random arrays are not case_001. Never calls the pipeline. A broken pipeline would still look green.",
+      "answer_key": {
+        "scores": {
+          "calls_real_path": 0,
+          "fixed_example": 0,
+          "observable_asserts": 0,
+          "regression_anchor": 0,
+          "failure_modes": 0,
+          "tutorial_constraints": 1
+        },
+        "total": 1
+      }
+    },
+    {
+      "id": "medium",
+      "title": "Medium prompt",
+      "prompt": "Write pytest tests for run_cached_pipeline.",
+      "code": "from pathlib import Path\nfrom vibe_to_trust.inference import run_cached_pipeline\n\n\ndef test_pipeline_runs(tmp_path: Path):\n    case = Path(\"examples/case_001\")\n    result = run_cached_pipeline(case, tmp_path)\n    assert Path(result[\"output\"]).is_file()\n    assert result[\"mode\"] == \"cached\"\n    # Missing: Dice vs metrics.json, invalid inputs, shape checks.\n",
+      "critique": "Calls the real pipeline on a fixed example — good start. But no Dice regression anchor and no invalid-input coverage. Silent metric drop would still pass.",
+      "answer_key": {
+        "scores": {
+          "calls_real_path": 1,
+          "fixed_example": 1,
+          "observable_asserts": 1,
+          "regression_anchor": 0,
+          "failure_modes": 0,
+          "tutorial_constraints": 1
+        },
+        "total": 4
+      }
+    },
+    {
+      "id": "strong",
+      "title": "Strong prompt",
+      "prompt": "I have a cached knee MRI pipeline: run_cached_pipeline(case_dir, out_dir).\nPlease write pytest that:\n1) smoke-runs examples/case_001 and asserts output exists, shape matches, mode==\"cached\";\n2) regression: mean Dice vs metrics.json within 1e-5;\n3) does NOT download models or require GPU.\nIf I later change the output, regression must fail.",
+      "code": "from pathlib import Path\nimport json\nimport nibabel as nib\nimport numpy as np\nfrom vibe_to_trust.inference import run_cached_pipeline\nfrom vibe_to_trust.metrics import mean_dice\nfrom vibe_to_trust.preprocessing import validate_segmentation\n\nCASE = Path(\"examples/case_001\")\n\n\ndef test_smoke_cached_pipeline(tmp_path: Path):\n    result = run_cached_pipeline(CASE, tmp_path)\n    assert Path(result[\"output\"]).is_file()\n    assert result[\"mode\"] == \"cached\"\n    assert result[\"shape\"] == [64, 64, 64]\n    pred = np.asanyarray(nib.load(result[\"output\"]).dataobj)\n    validate_segmentation(pred)\n\n\ndef test_regression_mean_dice(tmp_path: Path):\n    result = run_cached_pipeline(CASE, tmp_path)\n    gt = np.asanyarray(nib.load(next((CASE / \"ground_truth\").glob(\"*_gt.nii.gz\"))).dataobj)\n    pred = np.asanyarray(nib.load(result[\"output\"]).dataobj)\n    expected = json.loads((CASE / \"metrics.json\").read_text())\n    measured = mean_dice(pred, gt)\n    assert abs(measured - expected[\"tutorial_resolution_dice\"][\"mean_dice\"]) < 1e-5\n",
+      "critique": "Strong smoke + regression against metrics.json, still cached/CPU-friendly. Remaining gap: dedicated invalid-input tests (see tests/test_invalid_inputs.py).",
+      "answer_key": {
+        "scores": {
+          "calls_real_path": 1,
+          "fixed_example": 1,
+          "observable_asserts": 1,
+          "regression_anchor": 1,
+          "failure_modes": 0,
+          "tutorial_constraints": 1
+        },
+        "total": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+numpy<3,>=1.26
+nibabel<6,>=5.2
+matplotlib<4,>=3.8
+
+[infer]
+torch>=2.1
+nnunetv2
+SimpleITK>=2.3
+
+[test]
+pytest<9,>=8

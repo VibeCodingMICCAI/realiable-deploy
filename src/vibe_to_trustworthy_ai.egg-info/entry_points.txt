@@ -1,0 +1,3 @@
+[console_scripts]
+vibe-demo = vibe_to_trust.cli:demo_main
+vibe-reproduce = vibe_to_trust.cli:reproduce_main

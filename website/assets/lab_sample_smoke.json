@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "action": "smoke",
+  "mode": "sample",
+  "command": "python -m pytest tests/test_smoke.py -q",
+  "message": "Smoke checks passed. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "checks": [
+    { "name": "output_exists", "pass": true, "detail": "outputs/lab/smoke/prediction.nii.gz" },
+    { "name": "mode_cached", "pass": true, "detail": "cached" },
+    { "name": "shape_64", "pass": true, "detail": "[64, 64, 64]" },
+    { "name": "valid_labels", "pass": true, "detail": "labels look valid" }
+  ]
+}

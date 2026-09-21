@@ -1,0 +1,39 @@
+{
+  "case_id": "oaizib_405",
+  "source": "Dataset360_oaizib / OAI-ZIB style knee MRI (downsampled tutorial extract)",
+  "labels": {
+    "1": "Femur",
+    "2": "Femoral Cartilage",
+    "3": "Tibia",
+    "4": "Medial Tibial Cartilage",
+    "5": "Lateral Tibial Cartilage"
+  },
+  "original_shape": [
+    160,
+    384,
+    384
+  ],
+  "tutorial_shape": [
+    64,
+    64,
+    64
+  ],
+  "full_resolution_dice": {
+    "Femur": 0.9886,
+    "Femoral Cartilage": 0.897,
+    "Tibia": 0.9889,
+    "Medial Tibial Cartilage": 0.8631,
+    "Lateral Tibial Cartilage": 0.8589,
+    "mean_dice": 0.9193
+  },
+  "tutorial_resolution_dice": {
+    "Femur": 0.988005,
+    "Femoral Cartilage": 0.885161,
+    "Tibia": 0.988905,
+    "Medial Tibial Cartilage": 0.875294,
+    "Lateral Tibial Cartilage": 0.850895,
+    "mean_dice": 0.917652
+  },
+  "note": "Tutorial volumes are intentionally downsampled for sharing and CPU demos. Full-resolution inference remains optional.",
+  "model": "nnUNetTrainer__nnUNetPlans__3d_fullres Dataset360_oaizib ensemble predictions"
+}

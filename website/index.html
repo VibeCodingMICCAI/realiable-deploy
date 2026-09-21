@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>From Vibe Coding to Trustworthy AI</title>
+    <meta
+      name="description"
+      content="Interactive readiness check: run a cached lab, score AI-generated tests, pack evidence by intended use."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section id="landing" class="screen">
+        <p class="eyebrow">MICCAI tutorial · knee MRI segmentation</p>
+        <h1>From Vibe Coding to Trustworthy AI</h1>
+        <p class="lede">Is your AI prototype ready to share?</p>
+        <p>
+          We already have a knee MRI segmentation model that works. The question is
+          not how to train it — the question is what we need before other people can
+          reliably use, reproduce, review, or build on it.
+        </p>
+        <div class="hero-visual">
+          <img src="assets/mid_slice.png" alt="Knee MRI with segmentation overlay" />
+          <p class="caption">
+            Cached tutorial example · multi-structure knee MRI segmentation · educational use only
+          </p>
+        </div>
+        <div class="nav" style="margin-top:0">
+          <button class="btn primary" data-go="use">Start the readiness check</button>
+          <a class="btn" href="activity.html">Full activity guide</a>
+        </div>
+      </section>
+
+      <section id="use" class="screen hidden">
+        <h2>Choose your intended use</h2>
+        <p>This choice changes the recommendations at the end.</p>
+        <div class="card-grid" id="use-grid"></div>
+        <div class="nav">
+          <button class="btn" data-go="landing">Back</button>
+          <button class="btn primary" id="use-next" disabled>Continue</button>
+        </div>
+      </section>
+
+      <section id="testing" class="screen hidden">
+        <h2>Testing checklist</h2>
+        <p class="callout">
+          <strong>Important:</strong> testing the AI model ≠ testing the AI software.
+          Model questions ask “is performance acceptable?” Software questions ask
+          “does the pipeline load, validate, save and stay stable?”
+        </p>
+        <div id="testing-list" class="checklist"></div>
+        <div class="nav">
+          <button class="btn" data-go="use">Back</button>
+          <button class="btn primary" data-go="repro">Continue</button>
+        </div>
+      </section>
+
+      <section id="repro" class="screen hidden">
+        <h2>Reproducibility checklist</h2>
+        <pre class="flow">Clone → Install → Run one command → Reproduce the example result</pre>
+        <div id="repro-list" class="checklist"></div>
+        <div class="nav">
+          <button class="btn" data-go="testing">Back</button>
+          <button class="btn primary" data-go="lab">Continue to lab</button>
+        </div>
+      </section>
+
+      <section id="lab" class="screen hidden">
+        <h2>Run the lab</h2>
+        <p>
+          Click to run the cached demo, smoke checks, or reproduction.
+          Live mode needs <code>python scripts/tutorial_lab.py</code>; otherwise you see a pre-recorded sample.
+        </p>
+        <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
+        <div class="lab-actions">
+          <button class="btn primary" type="button" data-lab="demo">Run demo</button>
+          <button class="btn primary" type="button" data-lab="smoke">Run smoke test</button>
+          <button class="btn primary" type="button" data-lab="reproduce">Reproduce example</button>
+        </div>
+        <pre id="lab-terminal" class="lab-terminal" aria-live="polite">Ready. Choose an action above.</pre>
+        <div id="lab-overlay-wrap" class="lab-overlay hidden">
+          <img id="lab-overlay" alt="Lab overlay preview" />
+        </div>
+        <div class="nav">
+          <button class="btn" data-go="repro">Back</button>
+          <button class="btn primary" data-go="assess">Score AI-generated tests</button>
+        </div>
+      </section>
+
+      <section id="assess" class="screen hidden">
+        <h2>Score AI-generated tests</h2>
+        <p>
+          Same task, three prompts. Read the generated test, score it yourself (0–6),
+          then compare with the answer key.
+        </p>
+        <div class="scenario-tabs" id="assess-tabs" role="tablist"></div>
+        <article class="assess-panel">
+          <h3>Prompt</h3>
+          <pre id="assess-prompt" class="prompt-box"></pre>
+          <div class="pack-actions">
+            <button class="btn" type="button" id="copy-prompt">Copy prompt</button>
+          </div>
+          <h3>Generated test</h3>
+          <pre id="assess-code" class="code-box"></pre>
+          <h3>Your score <span id="assess-your-total" class="score-pill">0 / 6</span></h3>
+          <div id="assess-rubric" class="rubric-list"></div>
+          <div class="pack-actions">
+            <button class="btn" type="button" id="assess-reset">Reset my scores</button>
+            <button class="btn primary" type="button" id="assess-compare">Compare with answer key</button>
+          </div>
+          <div id="assess-feedback" class="pack-feedback hidden" aria-live="polite"></div>
+        </article>
+        <div class="nav">
+          <button class="btn" data-go="lab">Back</button>
+          <button class="btn primary" data-go="scenarios">Continue to packing</button>
+        </div>
+      </section>
+
+      <section id="scenarios" class="screen hidden">
+        <h2>Pack what you need</h2>
+        <p>
+          Drag items into the bag for this use case — or tap an item, then tap the bag.
+          Leave overkill items in the pool. Then check your packing.
+        </p>
+        <div class="scenario-tabs" id="scenario-tabs" role="tablist"></div>
+        <div class="pack-board">
+          <div class="pack-zone pool-zone">
+            <h3>Available evidence</h3>
+            <p class="caption" id="pool-hint">Tap or drag items you would include.</p>
+            <div id="item-pool" class="item-pool" aria-label="Available evidence"></div>
+          </div>
+          <div class="pack-zone bag-zone" id="bag-drop">
+            <h3 id="bag-title">Your bag</h3>
+            <p class="caption" id="bag-hint">Drop essentials here</p>
+            <div id="item-bag" class="item-bag" aria-label="Packed items"></div>
+          </div>
+        </div>
+        <div class="pack-actions">
+          <button class="btn" id="pack-reset" type="button">Empty bag</button>
+          <button class="btn primary" id="pack-check" type="button">Check my packing</button>
+        </div>
+        <div id="pack-feedback" class="pack-feedback hidden" aria-live="polite"></div>
+        <div class="nav">
+          <button class="btn" data-go="assess">Back</button>
+          <button class="btn primary" id="scenario-next" type="button">Next scenario</button>
+        </div>
+      </section>
+
+      <section id="summary" class="screen hidden">
+        <h2>Final readiness summary</h2>
+        <p class="caption">Educational indicator only — not a clinical certification.</p>
+        <div id="summary-box" class="summary"></div>
+        <div class="nav">
+          <button class="btn" data-go="scenarios">Back</button>
+          <button class="btn" id="restart">Start over</button>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

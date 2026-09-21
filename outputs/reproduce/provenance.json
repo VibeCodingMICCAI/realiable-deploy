@@ -1,0 +1,23 @@
+{
+  "config": {
+    "expected_mean_dice": 0.917652,
+    "mode": "cached"
+  },
+  "data_case": "oaizib_405",
+  "dice_matches_cached": true,
+  "framework_versions": {
+    "nibabel": "5.3.3",
+    "numpy": "2.2.6"
+  },
+  "git_commit": "ebb2738bfef565353b63ae16c08264b43e698c82",
+  "input_path": "C:\\Users\\chris\\MICCAI2026\\realiable-deploy\\examples\\case_001\\input\\oaizib_405_mri.nii.gz",
+  "input_sha256": "228a939f88d329daa074ad75c59618db688100b11380a8e01a307916c2b2becd",
+  "measured_mean_dice": 0.917652,
+  "model_version": "nnUNet Dataset360_oaizib 3d_fullres (cached tutorial path)",
+  "output_array_sha256": "b14894de349f51b2b95f53da3d0f14363fff25bd4f5ce0d66dad42548e68cdaa",
+  "output_file_sha256": "091dc607e909699be66df27819052448cb51ec5ccfb84da552067f27905bb2ae",
+  "output_path": "outputs\\reproduce\\prediction.nii.gz",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python_version": "3.10.19",
+  "tool_version": "0.1.0"
+}
