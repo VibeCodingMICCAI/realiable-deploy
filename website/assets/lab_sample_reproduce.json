@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "action": "reproduce",
+  "mode": "sample",
+  "command": "python scripts/reproduce_example.py",
+  "message": "Reproduction matched cached Dice. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "provenance": {
+    "measured_mean_dice": 0.917652,
+    "dice_matches_cached": true,
+    "git_commit": "sample",
+    "input_sha256": "abcd1234ef00",
+    "output_sha256": "fedc9876ba00",
+    "tool_version": "0.1.0"
+  },
+  "provenance_path": "outputs/lab/reproduce/provenance.json"
+}

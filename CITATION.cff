@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: "From Vibe Coding to Trustworthy AI"
+message: "If you use this tutorial materials, please cite it as below."
+type: software
+authors:
+  - name: "MICCAI Vibe Coding Tutorial contributors"
+version: "0.1.0"
+date-released: "2026-09-18"
+license: Apache-2.0
+abstract: >
+  A short educational repository demonstrating testing, reproducibility and
+  intended-use readiness around an existing knee MRI segmentation prototype.

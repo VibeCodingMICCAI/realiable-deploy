@@ -1,0 +1,11 @@
+{
+  "scores": {
+    "calls_real_path": 0,
+    "fixed_example": 0,
+    "observable_asserts": 0,
+    "regression_anchor": 0,
+    "failure_modes": 0,
+    "tutorial_constraints": 1
+  },
+  "total": 1
+}

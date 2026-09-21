@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tutorial activity · From Vibe Coding to Trustworthy AI</title>
+    <meta
+      name="description"
+      content="Full MICCAI tutorial activity guide: lab, score AI-generated tests, pack readiness evidence."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .doc h2 { margin-top: 2rem; }
+      .doc h3 { margin-top: 1.4rem; }
+      .doc table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.8rem 0 1.2rem;
+        font-size: 0.95rem;
+      }
+      .doc th, .doc td {
+        border: 1px solid var(--line);
+        padding: 0.55rem 0.7rem;
+        text-align: left;
+        vertical-align: top;
+        background: var(--card);
+      }
+      .doc th { background: rgba(15,106,92,.08); }
+      .doc ol, .doc ul { margin: 0.4rem 0 1rem 1.2rem; }
+      .doc li { margin: 0.25rem 0; }
+      .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell doc">
+      <div class="topbar">
+        <a class="btn primary" href="index.html">Start interactive check</a>
+        <a class="btn" href="index.html#lab">Jump to lab</a>
+      </div>
+
+      <p class="eyebrow">MICCAI tutorial · activity guide</p>
+      <h1>From Vibe Coding to Trustworthy AI</h1>
+      <p class="lede">Full activity sheet for facilitators and participants</p>
+      <p>
+        <strong>Audience:</strong> researchers with a working AI prototype ·
+        <strong>Time:</strong> ~30–40 minutes ·
+        <strong>Example:</strong> knee MRI segmentation (cached nnU-Net demo)
+      </p>
+
+      <h2>Learning goals</h2>
+      <ol>
+        <li>Separate <strong>model testing</strong> from <strong>software testing</strong>.</li>
+        <li>Name what makes a prototype <strong>reproducible</strong>.</li>
+        <li>Use better prompts to generate tests, and <strong>score</strong> AI-generated tests.</li>
+        <li>Match evidence to <strong>intended use</strong> (demo ≠ open-source ≠ clinical).</li>
+      </ol>
+
+      <h2>How to open this activity</h2>
+      <table>
+        <thead>
+          <tr><th>Mode</th><th>How</th><th>Lab buttons</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Live lab (best)</td>
+            <td><code>python scripts/tutorial_lab.py</code></td>
+            <td>Real cached runs</td>
+          </tr>
+          <tr>
+            <td>This GitHub Page</td>
+            <td>You are here — use the interactive check</td>
+            <td>Pre-recorded samples</td>
+          </tr>
+          <tr>
+            <td>Static local</td>
+            <td><code>python -m http.server 8000 --directory website</code></td>
+            <td>Pre-recorded samples</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Flow</h2>
+      <pre class="flow">1 Intended use → 2 Testing → 3 Reproducibility → 4 Lab → 5 Score tests → 6 Pack bag → 7 Summary</pre>
+
+      <table>
+        <thead>
+          <tr><th>Step</th><th>Minutes</th><th>Screen</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Framing + intended use</td><td>5</td><td>Landing → Use</td></tr>
+          <tr><td>Testing vs software testing</td><td>5</td><td>Testing</td></tr>
+          <tr><td>Reproducibility</td><td>4</td><td>Repro</td></tr>
+          <tr><td>Run the lab</td><td>6</td><td>Lab</td></tr>
+          <tr><td>Score AI-generated tests</td><td>8</td><td>Assess</td></tr>
+          <tr><td>Pack the bag</td><td>6</td><td>Scenarios</td></tr>
+          <tr><td>Debrief</td><td>4</td><td>Summary</td></tr>
+        </tbody>
+      </table>
+
+      <h2>1. Choose intended use</h2>
+      <p>
+        Personal prototype, live demo, publication/open-source, or clinical/production.
+        This shapes final recommendations only — everyone walks the same path.
+      </p>
+
+      <h2>2. Testing checklist</h2>
+      <p class="callout">
+        <strong>Model:</strong> Is performance acceptable?<br />
+        <strong>Software:</strong> Does load → preprocess → predict/cache → save stay correct and stable?
+      </p>
+      <p>Notice: smoke, unit, integration, regression, invalid-input.</p>
+
+      <h2>3. Reproducibility checklist</h2>
+      <pre class="flow">Clone → Install → Run one command → Reproduce the example result</pre>
+      <p>Environment, pins, checkpoint, sample data, seed, code version, one documented command.</p>
+
+      <h2>4. Run the lab</h2>
+      <ol>
+        <li><strong>Run demo</strong> — cached MRI → overlay + Dice</li>
+        <li><strong>Run smoke test</strong> — output exists, shape, labels</li>
+        <li><strong>Reproduce example</strong> — provenance (hashes, Dice match)</li>
+      </ol>
+      <p class="caption">
+        Sample-mode banner? Start <code>python scripts/tutorial_lab.py</code> locally for live runs.
+      </p>
+
+      <h2>5. Score AI-generated tests</h2>
+      <p>Same task, three prompts (weak / medium / strong):</p>
+      <ol>
+        <li>Read prompt + generated test</li>
+        <li>Score the 6-point rubric (Yes/No)</li>
+        <li>Compare with answer key + critique</li>
+        <li>Optional: copy the strong prompt into your assistant</li>
+      </ol>
+      <table>
+        <thead><tr><th>#</th><th>Rubric item</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Calls real path</td></tr>
+          <tr><td>2</td><td>Fixed example (<code>examples/case_001</code>)</td></tr>
+          <tr><td>3</td><td>Observable asserts (not <code>assert True</code>)</td></tr>
+          <tr><td>4</td><td>Regression anchor (<code>metrics.json</code> / hash)</td></tr>
+          <tr><td>5</td><td>Failure modes (invalid inputs)</td></tr>
+          <tr><td>6</td><td>Tutorial constraints (no download / GPU; CI-friendly)</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Teaching point:</strong> prompt quality drives test quality — a high score still needs a real run.</p>
+
+      <h2>6. Pack what you need</h2>
+      <p>
+        For Demo / Open-source / Clinical: pack essentials, leave overkill in the pool
+        (e.g. regulatory items for a conference demo), then check packing.
+      </p>
+
+      <h2>7. Summary</h2>
+      <p>
+        Review checklist counts, your test scores, packing scores, and “consider adding” items.
+        Educational only — <strong>not</strong> clinical certification.
+      </p>
+
+      <h2>Facilitator notes</h2>
+      <ul>
+        <li>Open with: “The model already works on my laptop — what else do we need?”</li>
+        <li>Live-demo the lab once; use sample mode if installs are hard.</li>
+        <li>On the weak prompt: “Would a broken pipeline still look green?”</li>
+        <li>On packing: put “clinical validation” in the demo bag and discuss.</li>
+        <li>Close: demo-ready ≠ publication-ready ≠ clinical-ready.</li>
+      </ul>
+
+      <h2>What this is not</h2>
+      <ul>
+        <li>Not an nnU-Net training tutorial</li>
+        <li>Not a claim of SOTA segmentation</li>
+        <li>Not regulatory or clinical certification guidance</li>
+      </ul>
+
+      <h2>Optional deeper dive</h2>
+      <pre class="flow">python scripts/demo.py
+python scripts/run_tests.py
+python scripts/reproduce_example.py</pre>
+
+      <div class="nav">
+        <a class="btn primary" href="index.html">Start the interactive activity</a>
+      </div>
+      <p class="caption">Source markdown: <code>docs/activity.md</code> in the repository.</p>
+    </main>
+  </body>
+</html>

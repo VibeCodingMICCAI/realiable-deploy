@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "action": "demo",
+  "mode": "sample",
+  "command": "python scripts/demo.py --no-open",
+  "message": "Cached demo finished. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "mean_dice": 0.917652,
+  "metrics": {
+    "Femur": 0.988005,
+    "Femoral Cartilage": 0.885161,
+    "Tibia": 0.988905,
+    "Medial Tibial Cartilage": 0.875294,
+    "Lateral Tibial Cartilage": 0.850895,
+    "mean_dice": 0.917652
+  },
+  "overlay_url": "assets/mid_slice.png"
+}
