@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "action": "stale_weak",
+  "challenge_id": "stale_weak",
+  "title": "Initial checks (fresh output dir per case)",
+  "mode": "sample",
+  "command": "challenge:stale_weak",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "A_output_exists",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "A_shape",
+      "pass": true,
+      "expected": [
+        64,
+        64,
+        64
+      ],
+      "observed": [
+        64,
+        64,
+        64
+      ],
+      "detail": ""
+    },
+    {
+      "name": "A_labels",
+      "pass": true,
+      "expected": "valid",
+      "observed": "ok",
+      "detail": ""
+    },
+    {
+      "name": "B_output_exists",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "B_shape",
+      "pass": true,
+      "expected": [
+        64,
+        64,
+        64
+      ],
+      "observed": [
+        64,
+        64,
+        64
+      ],
+      "detail": ""
+    },
+    {
+      "name": "B_labels",
+      "pass": true,
+      "expected": "valid",
+      "observed": "ok",
+      "detail": ""
+    }
+  ],
+  "explanation": "These checks use a separate output directory for each case, so they never see state left behind by a previous run in a shared folder.",
+  "meta": {
+    "reuse_existing": true
+  },
+  "sample_note": "Pre-recorded. Not executed in the browser."
+}

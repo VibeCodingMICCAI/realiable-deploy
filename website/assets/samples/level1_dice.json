@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "action": "level1_dice",
+  "challenge_id": "level1_dice",
+  "title": "Level 1 \u00b7 Dice contracts",
+  "mode": "sample",
+  "command": "challenge:level1_dice",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "identical",
+      "pass": true,
+      "expected": 1.0,
+      "observed": 1.0,
+      "detail": ""
+    },
+    {
+      "name": "disjoint",
+      "pass": true,
+      "expected": 0.0,
+      "observed": 0.0,
+      "detail": ""
+    },
+    {
+      "name": "partial_overlap",
+      "pass": true,
+      "expected": 0.933333,
+      "observed": 0.933333,
+      "detail": "One voxel removed from an 8-voxel cube \u2192 Dice=14/15"
+    },
+    {
+      "name": "both_empty_label",
+      "pass": true,
+      "expected": 1.0,
+      "observed": 1.0,
+      "detail": "Convention in this repo: if pred and ref are both empty for a label, Dice=1.0. Other projects use NaN or skip the label \u2014 state the convention when aggregating."
+    }
+  ],
+  "explanation": "Dice examples are deterministic array checks. Empty-mask convention here is Dice=1.0 when both masks are empty; that choice inflates mean Dice if many labels are absent.",
+  "meta": {
+    "work_root": "outputs\\lab\\sample_gen\\level1_dice\\dice_9a458fce2afb45279e5afa94dd57fd55"
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

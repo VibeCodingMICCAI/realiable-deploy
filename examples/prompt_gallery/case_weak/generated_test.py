@@ -1,16 +1,13 @@
-"""Illustrative weak AI-generated test — NOT collected by pytest."""
+"""Curated example A — plausible test that misses affine defects. Not collected by pytest."""
+
+import nibabel as nib
+from vibe_to_trust.challenges.fixtures import write_synthetic_case
+from vibe_to_trust.metrics import mean_dice
 
 
-def test_model_works():
-    # Looks green, proves nothing about the pipeline.
-    assert True
-
-
-def test_random_dice_looks_ok():
-    import numpy as np
-
-    pred = np.random.randint(0, 6, size=(32, 32, 32))
-    gt = np.random.randint(0, 6, size=(32, 32, 32))
-    # "Dice" computed on random noise — no link to the real case.
-    overlap = (pred == gt).mean()
-    assert overlap >= 0.0
+def test_export_regression(tmp_path):
+    case = write_synthetic_case(tmp_path, faulty_affine=False)
+    pred = nib.load(case["pred_path"])
+    gt = nib.load(case["gt_path"])
+    assert mean_dice(pred.get_fdata(), gt.get_fdata()) == 1.0
+    assert pred.shape == gt.shape

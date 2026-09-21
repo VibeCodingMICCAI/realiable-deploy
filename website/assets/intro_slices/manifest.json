@@ -1,0 +1,72 @@
+{
+  "case_id": "oaizib_405",
+  "note": "Packaged tutorial extract from examples/case_001. Intentionally downsampled.",
+  "file_format": ".nii.gz",
+  "volume_shape": [
+    64,
+    64,
+    64
+  ],
+  "voxel_spacing_mm": [
+    1.75,
+    2.1875,
+    2.1875
+  ],
+  "view_axis": "axial (index along axis 2)",
+  "slice_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60
+  ],
+  "slice_count_exported": 16,
+  "slice_count_total": 64,
+  "export_step": 4,
+  "labels": {
+    "1": "Femur",
+    "2": "Femoral Cartilage",
+    "3": "Tibia",
+    "4": "Medial Tibial Cartilage",
+    "5": "Lateral Tibial Cartilage"
+  },
+  "label_colors_hex": {
+    "1": "#ff3333",
+    "2": "#ffd91a",
+    "3": "#338cff",
+    "4": "#33e666",
+    "5": "#e64ce6"
+  },
+  "outputs_described": [
+    {
+      "path": "outputs/demo/prediction.nii.gz",
+      "role": "Saved segmentation labels (NIfTI)"
+    },
+    {
+      "path": "outputs/demo/overlay.png",
+      "role": "Visual mid-slice overlay (PNG, not the clinical result)"
+    },
+    {
+      "path": "outputs/reproduce/provenance.json",
+      "role": "Provenance / verification record"
+    }
+  ],
+  "asset_pattern": {
+    "mri": "assets/intro_slices/mri_{index:03d}.png",
+    "pred": "assets/intro_slices/pred_{index:03d}.png",
+    "overlay": "assets/intro_slices/overlay_{index:03d}.png",
+    "gt": "assets/intro_slices/gt_{index:03d}.png",
+    "gt_overlay": "assets/intro_slices/gt_overlay_{index:03d}.png"
+  }
+}

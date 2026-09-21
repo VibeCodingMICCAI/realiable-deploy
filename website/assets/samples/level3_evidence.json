@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "action": "level3_evidence",
+  "challenge_id": "level3_evidence",
+  "title": "Level 3 \u00b7 Reproducibility evidence",
+  "mode": "sample",
+  "command": "challenge:level3_evidence",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "arrays_match",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_match",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "file_bytes_vs_semantic",
+      "pass": true,
+      "expected": "document difference",
+      "observed": {
+        "same_file_bytes": true,
+        "same_array_hash": true
+      },
+      "detail": "File-byte equality can fail across compressors/timestamps even when arrays and affines are semantically equal. Prefer array/geometry/metric checks."
+    },
+    {
+      "name": "provenance_fields",
+      "pass": true,
+      "expected": "tool_version, input_sha256, output_array_sha256",
+      "observed": [
+        "config",
+        "data_case",
+        "framework_versions",
+        "git_commit",
+        "input_path",
+        "input_sha256",
+        "model_version",
+        "output_array_sha256",
+        "output_file_sha256",
+        "output_path",
+        "platform",
+        "python_version",
+        "tool_version"
+      ],
+      "detail": ""
+    }
+  ],
+  "explanation": "Reproducing a cached synthetic result verifies the software path, not clinical performance. Byte-identical files are a stricter (and often brittle) requirement than semantic equivalence.",
+  "meta": {
+    "per_label_dice": {
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0
+    },
+    "provenance_keys": [
+      "config",
+      "data_case",
+      "framework_versions",
+      "git_commit",
+      "input_path",
+      "input_sha256",
+      "model_version",
+      "output_array_sha256",
+      "output_file_sha256",
+      "output_path",
+      "platform",
+      "python_version",
+      "tool_version"
+    ]
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

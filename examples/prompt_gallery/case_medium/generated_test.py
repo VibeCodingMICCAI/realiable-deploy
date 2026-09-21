@@ -1,13 +1,15 @@
-"""Illustrative medium AI-generated test — NOT collected by pytest."""
+"""Curated example C — wrong contract (expects identity). Not collected by pytest."""
 
 from pathlib import Path
+import nibabel as nib
+import numpy as np
+from vibe_to_trust.challenges.fixtures import write_synthetic_case
 
-from vibe_to_trust.inference import run_cached_pipeline
 
-
-def test_pipeline_runs(tmp_path: Path):
-    case = Path("examples/case_001")
-    result = run_cached_pipeline(case, tmp_path)
-    assert Path(result["output"]).is_file()
-    assert result["mode"] == "cached"
-    # Missing: Dice vs metrics.json, invalid inputs, shape checks.
+def test_export_looks_ok(tmp_path):
+    case = write_synthetic_case(tmp_path, faulty_affine=True)
+    pred = Path(case["pred_path"])
+    assert pred.is_file()
+    img = nib.load(pred)
+    assert img.ndim == 3
+    assert np.allclose(img.affine, np.eye(4))

@@ -1,6 +1,1 @@
-I have a cached knee MRI pipeline: run_cached_pipeline(case_dir, out_dir).
-Please write pytest that:
-1) smoke-runs examples/case_001 and asserts output exists, shape matches, mode=="cached";
-2) regression: mean Dice vs examples/case_001/metrics.json tutorial_resolution_dice within 1e-5;
-3) does NOT download models or require GPU.
-If I later change the output, regression must fail.
+Test that saved NIfTI segmentations preserve the input MRI affine (atol=1e-5) using a non-identity teaching affine.

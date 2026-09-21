@@ -1,7 +1,4 @@
-# Why this score is low
+# Curated discussion (Example A)
 
-- `assert True` always passes.
-- Random arrays are not `examples/case_001`.
-- Never calls `run_cached_pipeline`.
-- No regression anchor, no invalid-input checks.
-- A broken pipeline would still look green.
+Array Dice and shape stay perfect when the file is written with an identity affine.
+Misses the spatial geometry contract.

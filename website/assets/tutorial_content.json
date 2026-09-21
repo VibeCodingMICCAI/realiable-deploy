@@ -1,0 +1,51 @@
+{
+  "prompts": {
+    "inspect": {
+      "title": "Stage 1 — Inspect before editing",
+      "text": "Repository: vibe-to-trustworthy-ai (knee MRI segmentation teaching repo).\nContext: src/vibe_to_trust/nifti_io.py save_segmentation_nifti; synthetic affine challenge under vibe_to_trust.challenges.\nTask: Before changing code, clarify the software contract for saving a segmentation NIfTI.\nIntended behaviour: saved prediction must keep the same affine as the input MRI (rtol=0, atol=1e-5) after save/load.\nConstraints: do not modify examples/case_001 or metrics.json; CPU-only; no model download.\nAcceptance: list the current save path, whether affine is passed through, and which existing tests would/would not catch an identity-affine bug.\nDistinguish checks you actually ran from checks you only propose. List remaining uncertainty."
+    },
+    "implement": {
+      "title": "Stage 2 — Focused fix + tests",
+      "text": "Repository context: vibe_to_trust.nifti_io.save_segmentation_nifti and vibe_to_trust.challenges.affine.\nImplement: ensure production saves use the input affine; add a test that writes a synthetic volume with a non-identity affine, reloads the file, and asserts affines_match(..., rtol=0, atol=1e-5).\nConstraints: temporary directories only; do not touch packaged case_001; no GPU.\nAcceptance: weak file/shape/label/Dice checks still pass on a faulty identity-affine save; the new geometry test fails on that faulty save and passes on the corrected save.\nReport commands you ran and their exit status. Separate executed evidence from proposed follow-ups. Note remaining blind spots (e.g. orientation codes beyond affine)."
+    },
+    "review": {
+      "title": "Stage 3 — Review the diff",
+      "text": "Review the diff for the affine-preserving save and geometry test.\nCheck: teaching seam cannot be enabled accidentally in production callers; packaged reference data unchanged; assertions show expected vs observed affines.\nConstraints: no drive-by refactors.\nAcceptance: summarise what was verified (commands + results), what remains unverified, and whether this is software verification vs model validation.\nFlag any claim in comments/README that is stronger than the tests."
+    }
+  },
+  "prompt_comparisons": [
+    {
+      "id": "A",
+      "label": "Example A (curated)",
+      "prompt": "Add a regression test so our segmentation export cannot silently break spatial alignment.",
+      "code": "def test_export_regression(tmp_path):\n    case = write_synthetic_case(tmp_path, faulty_affine=False)\n    pred = nib.load(case[\"pred_path\"])\n    gt = nib.load(case[\"gt_path\"])\n    # Plausible but incomplete: array Dice only\n    assert mean_dice(pred.get_fdata(), gt.get_fdata()) == 1.0\n    assert pred.shape == gt.shape\n",
+      "discussion": "Misses affine: Dice and shape stay perfect when the file is written with np.eye(4).",
+      "detects_affine_defect": false
+    },
+    {
+      "id": "B",
+      "label": "Example B (curated)",
+      "prompt": "Test that saved NIfTI segmentations preserve the input MRI affine (atol=1e-5) using a non-identity teaching affine.",
+      "code": "def test_saved_affine_matches_input(tmp_path):\n    case = write_synthetic_case(tmp_path / \"faulty\", faulty_affine=True)\n    mri = nib.load(case[\"mri_path\"])\n    pred, aff = load_segmentation_nifti(case[\"pred_path\"])\n    assert affines_match(mri.affine, aff, rtol=0, atol=1e-5)\n",
+      "discussion": "Detects the seeded identity-affine defect after real save/load. Still does not prove clinical performance.",
+      "detects_affine_defect": true
+    },
+    {
+      "id": "C",
+      "label": "Example C (curated)",
+      "prompt": "Make sure export tests are thorough for our MICCAI demo.",
+      "code": "def test_export_looks_ok(tmp_path):\n    case = write_synthetic_case(tmp_path, faulty_affine=True)\n    pred = Path(case[\"pred_path\"])\n    assert pred.is_file()\n    img = nib.load(pred)\n    assert img.ndim == 3\n    # Compares affine to identity — passes on the defective save\n    assert np.allclose(img.affine, np.eye(4))\n",
+      "discussion": "Looks strict but encodes the wrong contract (expects identity), so it green-lights the bug.",
+      "detects_affine_defect": false
+    }
+  ],
+  "readme_incomplete": "# Knee MRI Segmentation\n\nState-of-the-art nnU-Net model for automatic knee MRI segmentation.\n\n## Quick start\n\n```bash\npip install -e .\npython demo.py\n```\n\nThis runs the model and prints metrics.\n\n## Results\n\nMean Dice ≈ 0.92 on our data.\n\n## Inference\n\nSupports GPU inference out of the box.\n",
+  "readme_improved": "# From Vibe Coding to Trustworthy AI\n\nTeaching repository: software testing and reproducibility around a **cached** knee MRI segmentation example (nnU-Net extract). Not a clinical device.\n\n## Audience\n\nMedical imaging / ML researchers who want to share a prototype reliably.\n\n## Cached demo vs real inference\n\n- **Default (this tutorial):** CPU-friendly cached pipeline on `examples/case_001/`.\n- **Optional:** real nnU-Net weights via `pip install -e \".[infer]\"` and `VIBE_NNUNET_MODEL` — see `model/README.md`. Not required for the tutorial.\n\n## Tested environment\n\nDocument what you actually ran (OS, Python). This repo targets Python ≥3.10.\n\n## Install (from repository root)\n\n```bash\npython -m pip install -e \".[test]\"\n```\n\nWorking directory: repository root.\n\n## Commands\n\n```bash\npython scripts/tutorial_lab.py          # interactive site + live checks\npython scripts/demo.py --no-open        # cached demo → outputs/demo/\npython scripts/run_tests.py             # pytest\npython scripts/reproduce_example.py     # provenance JSON under outputs/reproduce/\n```\n\n## Expected outputs\n\n- `outputs/demo/prediction.nii.gz`, `outputs/demo/overlay.png`\n- `outputs/reproduce/provenance.json` with `dice_matches_cached: true` on the packaged extract\n\n## Verification\n\n```bash\npython -m pytest -q\n```\n\nAcceptance for the packaged extract: tests pass; reproduce reports Dice match within 1e-5.\n\n## Limitations\n\n- Tutorial volumes are downsampled.\n- Cached path does not execute full nnU-Net inference.\n- Passing software tests ≠ clinical validation.\n",
+  "readme_audit_prompt": "Audit the project README against this repository.\nFor every command and claim: confirm the working directory, that the file/script exists, and what outputs it produces.\nPropose concrete README edits for: cached vs optional real inference, expected output paths, verification commands, environment, limitations.\nFlag any unverified claims (performance numbers, platform support, download URLs) instead of inventing them.\nDistinguish checks you executed from suggestions. List residual uncertainty.",
+  "affine": {
+    "requirement": "When exporting a segmentation NIfTI, the saved affine must match the input MRI affine (rtol=0, atol=1e-5) after reload. Array values, shape, and labels must remain valid.",
+    "weak_code": "def test_initial_export_checks(case_dir):\n    pred_path = next((case_dir / \"prediction\").glob(\"*_pred.nii.gz\"))\n    mri = nib.load(next((case_dir / \"input\").glob(\"*_mri.nii.gz\")))\n    gt = nib.load(next((case_dir / \"ground_truth\").glob(\"*_gt.nii.gz\")))\n    pred = nib.load(pred_path)\n    assert pred_path.is_file()\n    assert pred.shape == mri.shape\n    validate_segmentation(pred.get_fdata())\n    assert abs(mean_dice(pred.get_fdata(), gt.get_fdata()) - 1.0) < 1e-9\n    # Missing: compare pred.affine to mri.affine after save/load\n",
+    "strong_code": "def test_saved_affine_matches_input(case_dir):\n    mri = nib.load(next((case_dir / \"input\").glob(\"*_mri.nii.gz\")))\n    _data, pred_affine = load_segmentation_nifti(\n        next((case_dir / \"prediction\").glob(\"*_pred.nii.gz\"))\n    )\n    assert affines_match(mri.affine, pred_affine, rtol=0, atol=1e-5)\n",
+    "ai_prompt": "Synthetic teaching case (non-identity affine). Initial tests check file existence, shape, labels, and array Dice only.\nAdd a test that reloads the saved segmentation and compares its affine to the input MRI with rtol=0, atol=1e-5.\nUse temporary directories; do not modify examples/case_001.\nShow that the new test fails when save uses an identity affine and passes when affine is preserved.\nReport executed commands vs proposed ones."
+  }
+}

@@ -1,1 +1,1 @@
-Write some tests for my AI model.
+Add a regression test so our segmentation export cannot silently break spatial alignment.

@@ -1,0 +1,147 @@
+{
+  "ok": true,
+  "action": "level2_geometry",
+  "challenge_id": "level2_geometry",
+  "title": "Level 2 \u00b7 Saved spatial geometry",
+  "mode": "sample",
+  "command": "challenge:level2_geometry",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "faulty_detected",
+      "pass": true,
+      "expected": "geometry check fails on faulty",
+      "observed": "failed",
+      "detail": ""
+    },
+    {
+      "name": "corrected_passes",
+      "pass": true,
+      "expected": "geometry check passes on corrected",
+      "observed": "passed",
+      "detail": ""
+    }
+  ],
+  "explanation": "Integration: save then reload must preserve affine. Faulty identity-affine save is detected.",
+  "meta": {
+    "faulty": {
+      "variant": "faulty",
+      "suite": "geometry",
+      "synthetic": true,
+      "case_dir": "outputs\\lab\\sample_gen\\level2_geometry\\affine_5282e38e3fd84d77bef29659fe27646d\\case",
+      "input_affine": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "output_affine": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affines_equal": false
+    },
+    "corrected": {
+      "variant": "corrected",
+      "suite": "geometry",
+      "synthetic": true,
+      "case_dir": "outputs\\lab\\sample_gen\\level2_geometry\\affine_be9d3a9db98c4358981fe5e52b532c56\\case",
+      "input_affine": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "output_affine": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affines_equal": true
+    }
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

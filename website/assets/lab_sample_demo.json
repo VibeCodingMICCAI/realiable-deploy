@@ -2,8 +2,8 @@
   "ok": true,
   "action": "demo",
   "mode": "sample",
-  "command": "python scripts/demo.py --no-open",
-  "message": "Cached demo finished. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "command": "vibe_to_trust.inference.run_cached_pipeline(examples/case_001)",
+  "message": "Cached demo finished (pre-recorded sample — not executed in the browser).",
   "mean_dice": 0.917652,
   "metrics": {
     "Femur": 0.988005,
@@ -13,5 +13,10 @@
     "Lateral Tibial Cartilage": 0.850895,
     "mean_dice": 0.917652
   },
-  "overlay_url": "assets/mid_slice.png"
+  "overlay_url": "assets/mid_slice.png",
+  "checks": [
+    { "name": "output_exists", "pass": true, "expected": true, "observed": true, "detail": "outputs/demo/prediction.nii.gz" }
+  ],
+  "explanation": "Pre-recorded from the same cached path. Start tutorial_lab.py for a live run.",
+  "sample_note": "Pre-recorded example. Code did not run in the browser."
 }

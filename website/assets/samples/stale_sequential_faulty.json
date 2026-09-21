@@ -1,0 +1,96 @@
+{
+  "ok": false,
+  "action": "stale_sequential",
+  "challenge_id": "stale_sequential",
+  "title": "Sequential A\u2192B (faulty reuse)",
+  "mode": "sample",
+  "command": "challenge:stale_sequential reuse=True",
+  "message": "One or more listed checks failed.",
+  "checks": [
+    {
+      "name": "A_wrote_output",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "B_matches_B_reference",
+      "pass": false,
+      "expected": "Dice(B_result, B_ref) == 1",
+      "observed": 0.2,
+      "detail": "Acceptance: each case matches its own reference, not merely 'different inputs differ'."
+    },
+    {
+      "name": "B_equals_snapshot_A_informative",
+      "pass": true,
+      "expected": "see observed",
+      "observed": true,
+      "detail": "Informative: if true while B_matches_B_reference is false, B received A's stale result."
+    },
+    {
+      "name": "B_reused_existing_flag",
+      "pass": true,
+      "expected": "instrumentation",
+      "observed": {
+        "reused_existing": true,
+        "provider_invoked": false
+      },
+      "detail": ""
+    }
+  ],
+  "explanation": "Faulty policy returns an existing prediction.nii.gz without binding it to the current input. Correct policy always processes the current case and overwrites the output.",
+  "meta": {
+    "reuse_existing": true,
+    "session_dir": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1",
+    "shared_output": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1\\shared_out\\prediction.nii.gz",
+    "result_a": {
+      "ok": true,
+      "reused_existing": false,
+      "provider_invoked": true,
+      "output": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1\\cases\\case_A\\input\\teach_A_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "reuse_if_exists"
+    },
+    "result_b": {
+      "ok": true,
+      "reused_existing": true,
+      "provider_invoked": false,
+      "output": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_sequential_faulty\\seq_9084bca1\\cases\\case_B\\input\\teach_B_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "reuse_if_exists"
+    },
+    "dice_B_vs_Bref": 0.2,
+    "dice_B_vs_Aref": 1.0,
+    "B_matches_B_reference": false,
+    "B_looks_like_A": true,
+    "teaching_note": "Teaching derivative of the packaged extract. Case B remaps labels for a visibly different reference \u2014 not a second patient."
+  },
+  "sample_note": "Pre-recorded. Not executed in the browser."
+}

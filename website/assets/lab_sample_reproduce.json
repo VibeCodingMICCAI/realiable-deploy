@@ -2,15 +2,25 @@
   "ok": true,
   "action": "reproduce",
   "mode": "sample",
-  "command": "python scripts/reproduce_example.py",
-  "message": "Reproduction matched cached Dice. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "command": "vibe_to_trust.cli.reproduce_main(--case examples/case_001)",
+  "message": "Reproduction matched cached Dice. (pre-recorded sample)",
+  "checks": [
+    {
+      "name": "dice_matches_cached",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": "measured=0.917652"
+    }
+  ],
   "provenance": {
     "measured_mean_dice": 0.917652,
     "dice_matches_cached": true,
     "git_commit": "sample",
-    "input_sha256": "abcd1234ef00",
-    "output_sha256": "fedc9876ba00",
+    "input_sha256": "228a939f88d3",
+    "output_sha256": "091dc607e909",
     "tool_version": "0.1.0"
   },
-  "provenance_path": "outputs/lab/reproduce/provenance.json"
+  "explanation": "Pre-recorded sample. Code did not run in the browser.",
+  "sample_note": "Pre-recorded example. Code did not run in the browser."
 }

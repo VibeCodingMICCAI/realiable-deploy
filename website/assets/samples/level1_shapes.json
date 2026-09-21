@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "action": "level1_shapes",
+  "challenge_id": "level1_shapes",
+  "title": "Level 1 \u00b7 Shape mismatch",
+  "mode": "sample",
+  "command": "challenge:level1_shapes",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "reject_shape_mismatch",
+      "pass": true,
+      "expected": "InputError / explicit reject",
+      "observed": "shape mismatch: (4, 4, 4) vs (4, 4, 5)",
+      "detail": "Do not rely on NumPy broadcasting across volumes."
+    }
+  ],
+  "explanation": "A correct contract rejects mismatched shapes instead of broadcasting.",
+  "meta": {},
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

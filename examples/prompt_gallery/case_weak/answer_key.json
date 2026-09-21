@@ -1,11 +1,13 @@
 {
   "scores": {
-    "calls_real_path": 0,
-    "fixed_example": 0,
-    "observable_asserts": 0,
+    "calls_real_path": 1,
+    "fixed_example": 1,
+    "observable_asserts": 1,
     "regression_anchor": 0,
     "failure_modes": 0,
     "tutorial_constraints": 1
   },
-  "total": 1
+  "total": 4,
+  "detects_affine_defect": false,
+  "note": "Curated example — not a live model transcript."
 }

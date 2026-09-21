@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "action": "level1_invalid",
+  "challenge_id": "level1_invalid",
+  "title": "Level 1 \u00b7 Invalid inputs",
+  "mode": "sample",
+  "command": "challenge:level1_invalid",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "missing_file",
+      "pass": true,
+      "expected": "InputError",
+      "observed": "input file does not exist: outputs\\lab\\sample_gen\\level1_invalid\\invalid_b2b173c7ebc64e66a2138845c1129530\\missing.nii.gz",
+      "detail": ""
+    },
+    {
+      "name": "constant_image",
+      "pass": true,
+      "expected": "InputError",
+      "observed": "image has no intensity variation",
+      "detail": ""
+    }
+  ],
+  "explanation": "Invalid inputs should fail with understandable InputError messages.",
+  "meta": {},
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

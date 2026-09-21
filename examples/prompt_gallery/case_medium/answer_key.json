@@ -7,5 +7,7 @@
     "failure_modes": 0,
     "tutorial_constraints": 1
   },
-  "total": 4
+  "total": 4,
+  "detects_affine_defect": false,
+  "note": "Curated example — not a live model transcript. Wrong oracle."
 }

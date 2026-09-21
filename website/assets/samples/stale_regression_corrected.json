@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "action": "stale_regression_corrected",
+  "challenge_id": "stale_regression_corrected",
+  "title": "Regression: two cases, one output directory",
+  "mode": "sample",
+  "command": "challenge:stale_regression reuse=False",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "sequential_B_matches_own_reference",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": "B output matches B reference."
+    },
+    {
+      "name": "not_path_only",
+      "pass": true,
+      "expected": "compare arrays to references",
+      "observed": "snapshots used before second call",
+      "detail": "Both calls may return the same path; the test snapshots the first file."
+    }
+  ],
+  "explanation": "Corrected policy always overwrites from the current case's provider.",
+  "meta": {
+    "reuse_existing": false,
+    "session_dir": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d",
+    "shared_output": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d\\shared_out\\prediction.nii.gz",
+    "result_a": {
+      "ok": true,
+      "reused_existing": false,
+      "provider_invoked": true,
+      "output": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d\\cases\\case_A\\input\\teach_A_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "always_overwrite"
+    },
+    "result_b": {
+      "ok": true,
+      "reused_existing": false,
+      "provider_invoked": true,
+      "output": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_regression_corrected\\seq_55b0e21d\\cases\\case_B\\input\\teach_B_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "always_overwrite"
+    },
+    "dice_B_vs_Bref": 1.0,
+    "dice_B_vs_Aref": 0.2,
+    "B_matches_B_reference": true,
+    "B_looks_like_A": false,
+    "teaching_note": "Teaching derivative of the packaged extract. Case B remaps labels for a visibly different reference \u2014 not a second patient."
+  },
+  "sample_note": "Pre-recorded. Not executed in the browser."
+}

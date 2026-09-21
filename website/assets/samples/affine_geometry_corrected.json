@@ -1,0 +1,129 @@
+{
+  "ok": true,
+  "action": "affine_geometry_corrected",
+  "challenge_id": "affine_geometry_corrected",
+  "title": "Geometry check on corrected variant",
+  "mode": "sample",
+  "command": "challenge:affine suite=geometry variant=corrected",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "saved_affine_matches_input",
+      "pass": true,
+      "expected": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observed": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "detail": "rtol=0, atol=1e-5 after NIfTI save/load"
+    }
+  ],
+  "explanation": "Corrected save preserves the input affine through the NIfTI boundary. This is software verification on synthetic data, not model-performance validation.",
+  "meta": {
+    "variant": "corrected",
+    "suite": "geometry",
+    "synthetic": true,
+    "case_dir": "outputs\\lab\\sample_gen\\affine_geometry_corrected\\affine_2021780b0aad430caa7f50964498b761\\case",
+    "input_affine": [
+      [
+        0.7,
+        0.0,
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        0.8,
+        0.0,
+        -4.5
+      ],
+      [
+        0.0,
+        0.0,
+        1.2,
+        3.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "output_affine": [
+      [
+        0.7,
+        0.0,
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        0.8,
+        0.0,
+        -4.5
+      ],
+      [
+        0.0,
+        0.0,
+        1.2,
+        3.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affines_equal": true
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

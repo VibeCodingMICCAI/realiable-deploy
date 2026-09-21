@@ -1,0 +1,108 @@
+{
+  "ok": true,
+  "action": "affine_weak_faulty",
+  "challenge_id": "affine_weak_faulty",
+  "title": "Initial checks on faulty variant",
+  "mode": "sample",
+  "command": "challenge:affine suite=weak variant=faulty",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "output_exists",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": "outputs\\lab\\sample_gen\\affine_weak_faulty\\affine_5c53a122cbcd471f8e391ff7d7827df0\\case\\prediction\\synth_pred.nii.gz"
+    },
+    {
+      "name": "shape_matches_mri",
+      "pass": true,
+      "expected": [
+        16,
+        16,
+        12
+      ],
+      "observed": [
+        16,
+        16,
+        12
+      ],
+      "detail": ""
+    },
+    {
+      "name": "valid_labels",
+      "pass": true,
+      "expected": "labels in {0..5}",
+      "observed": "ok",
+      "detail": ""
+    },
+    {
+      "name": "array_dice_vs_gt",
+      "pass": true,
+      "expected": 1.0,
+      "observed": 1.0,
+      "detail": "Array Dice ignores NIfTI affine."
+    }
+  ],
+  "explanation": "These checks exercise file existence, shape, labels, and array Dice. They do not reload and compare the saved NIfTI affine to the input.",
+  "meta": {
+    "variant": "faulty",
+    "suite": "weak",
+    "synthetic": true,
+    "case_dir": "outputs\\lab\\sample_gen\\affine_weak_faulty\\affine_5c53a122cbcd471f8e391ff7d7827df0\\case",
+    "input_affine": [
+      [
+        0.7,
+        0.0,
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        0.8,
+        0.0,
+        -4.5
+      ],
+      [
+        0.0,
+        0.0,
+        1.2,
+        3.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "output_affine": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affines_equal": false
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

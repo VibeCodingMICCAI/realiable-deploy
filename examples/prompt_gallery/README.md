@@ -1,8 +1,6 @@
-# Prompt gallery (teaching examples)
+# Prompt gallery (curated)
 
-Curated **weak / medium / strong** prompts and example AI-generated tests.
+Examples A / B / C for export testing. **Curated teaching examples**, not recorded
+model outputs. Canonical UI copy: `website/assets/tutorial_content.json`.
 
-These files are for the interactive website scoring exercise. They are **not**
-part of the CI test suite (`pytest` only collects `tests/`).
-
-See [`docs/vibe_coding_recipes.md`](../../docs/vibe_coding_recipes.md).
+Not collected by pytest (`testpaths = tests` only).

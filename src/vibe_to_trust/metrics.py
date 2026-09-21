@@ -6,7 +6,12 @@ import numpy as np
 
 
 def dice_score(prediction: np.ndarray, reference: np.ndarray, label: int) -> float:
-    """Dice coefficient for one integer label."""
+    """Dice coefficient for one integer label.
+
+    Empty-mask convention used here: if both prediction and reference have
+    zero voxels for ``label``, return ``1.0``. Other codebases use NaN or
+    skip the label — document the choice before aggregating mean Dice.
+    """
     pred = np.asarray(prediction) == label
     ref = np.asarray(reference) == label
     denom = int(pred.sum() + ref.sum())

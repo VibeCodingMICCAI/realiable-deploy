@@ -6,158 +6,218 @@
     <title>From Vibe Coding to Trustworthy AI</title>
     <meta
       name="description"
-      content="Interactive readiness check: run a cached lab, score AI-generated tests, pack evidence by intended use."
+      content="MICCAI stand: understand a knee MRI segmentation tool, catch stale result reuse, review README handover."
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="shell">
       <section id="landing" class="screen">
-        <p class="eyebrow">MICCAI tutorial · knee MRI segmentation</p>
+        <p class="eyebrow">MICCAI tutorial · research software handover</p>
         <h1>From Vibe Coding to Trustworthy AI</h1>
-        <p class="lede">Is your AI prototype ready to share?</p>
-        <p>
-          We already have a knee MRI segmentation model that works. The question is
-          not how to train it — the question is what we need before other people can
-          reliably use, reproduce, review, or build on it.
+        <p class="lede">
+          Understand the tool, then ask: if tests are green, is the result still for the right case?
         </p>
-        <div class="hero-visual">
-          <img src="assets/mid_slice.png" alt="Knee MRI with segmentation overlay" />
+        <p>
+          Interactive stand for medical imaging / ML researchers. We use a
+          <strong>cached</strong> knee MRI segmentation extract — not clinical certification,
+          not model training.
+        </p>
+        <div class="route-grid">
+          <button class="route-card" type="button" data-go="intro" data-route="quick">
+            <strong>Quick route · 5–10 min</strong>
+            <span>Tool intro → stale-result challenge → evidence summary.</span>
+          </button>
+          <button class="route-card" type="button" data-go="intro" data-route="full">
+            <strong>Full route · ~30 min</strong>
+            <span>Intro → core challenge → testing menu → README handover → summary.</span>
+          </button>
+        </div>
+        <p class="caption">Jump to an activity:</p>
+        <div class="nav">
+          <button class="btn" type="button" data-go="intro">0 · What does this tool do?</button>
+          <button class="btn" type="button" data-go="core">1 · Changed input, unchanged result</button>
+          <button class="btn" type="button" data-go="challenges">2 · Testing menu</button>
+          <button class="btn" type="button" data-go="handover">3 · README handover</button>
+          <button class="btn" type="button" data-go="summary">Evidence summary</button>
+          <a class="btn" href="activity.html">Activity guide</a>
+        </div>
+        <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
+      </section>
+
+      <section id="intro" class="screen hidden">
+        <h2>What does this tool do?</h2>
+        <p>
+          Multi-structure <strong>knee MRI segmentation</strong>: the software takes a 3D MRI volume
+          and produces a label map (and optional visuals / provenance). This page uses the packaged
+          tutorial extract <code>examples/case_001</code> (downsampled).
+        </p>
+
+        <details open>
+          <summary>Overview (about 2 minutes)</summary>
+          <div class="panel">
+            <ul>
+              <li><strong>User provides:</strong> a 3D knee MRI in <code>.nii.gz</code> (NIfTI).</li>
+              <li><strong>Software produces:</strong> a segmentation NIfTI (integer labels per voxel), optional overlay PNG, optional provenance JSON.</li>
+              <li><strong>Research use:</strong> draft structure masks for further analysis — not a clinical device.</li>
+              <li><strong>This demo executes:</strong> the <em>cached</em> path (load packaged prediction → validate → save/visualise). It does <em>not</em> run full nnU-Net GPU inference unless you configure optional weights separately.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Processing flow: real inference vs tutorial cache</summary>
+          <pre class="flow">Real inference (optional):
+  MRI → preprocess / nnU-Net predict → segmentation NIfTI → save
+
+Cached tutorial (default here):
+  Example MRI + precomputed prediction → validate/load → save result + overlay
+
+Mode label: “live lab” = Python ran on this machine. It still uses the cached prediction unless you enable optional inference.</pre>
+        </details>
+
+        <div class="panel">
+          <h3>Interactive slice view</h3>
+          <p class="caption" id="intro-slice-caption">Loading slice assets…</p>
+          <div class="intro-controls">
+            <label>Axial slice <span id="slice-label">—</span>
+              <input type="range" id="slice-slider" min="0" max="0" value="0" />
+            </label>
+            <label>View
+              <select id="view-mode">
+                <option value="mri">MRI only</option>
+                <option value="pred">Segmentation mask</option>
+                <option value="overlay" selected>MRI + overlay</option>
+                <option value="gt">Ground truth mask (reference)</option>
+                <option value="gt_overlay">MRI + ground truth</option>
+              </select>
+            </label>
+            <label>Overlay opacity
+              <input type="range" id="opacity-slider" min="0" max="100" value="55" />
+            </label>
+          </div>
+          <div class="intro-stage">
+            <img id="intro-img" alt="Knee MRI slice" />
+            <div id="intro-overlay-img" class="intro-overlay-layer" aria-hidden="true"></div>
+          </div>
+          <div id="intro-legend" class="legend"></div>
           <p class="caption">
-            Cached tutorial example · multi-structure knee MRI segmentation · educational use only
+            Ground truth is a <strong>reference annotation for evaluation</strong>, not an input required for ordinary inference.
+            Prediction and ground truth must not be confused.
           </p>
         </div>
-        <div class="nav" style="margin-top:0">
-          <button class="btn primary" data-go="use">Start the readiness check</button>
-          <a class="btn" href="activity.html">Full activity guide</a>
-        </div>
-      </section>
 
-      <section id="use" class="screen hidden">
-        <h2>Choose your intended use</h2>
-        <p>This choice changes the recommendations at the end.</p>
-        <div class="card-grid" id="use-grid"></div>
+        <details>
+          <summary>Technical details (from packaged files)</summary>
+          <div class="panel" id="intro-tech"></div>
+        </details>
+
         <div class="nav">
-          <button class="btn" data-go="landing">Back</button>
-          <button class="btn primary" id="use-next" disabled>Continue</button>
+          <button class="btn" type="button" data-go="landing">Home</button>
+          <button class="btn primary" type="button" data-go="core">Continue to core challenge</button>
         </div>
       </section>
 
-      <section id="testing" class="screen hidden">
-        <h2>Testing checklist</h2>
-        <p class="callout">
-          <strong>Important:</strong> testing the AI model ≠ testing the AI software.
-          Model questions ask “is performance acceptable?” Software questions ask
-          “does the pipeline load, validate, save and stay stable?”
+      <section id="core" class="screen hidden">
+        <h2>Changed input, unchanged result</h2>
+        <p class="caption">
+          Seeded teaching defect: “skip segmentation if prediction.nii.gz already exists.”
+          Not a claim that the production cached pipeline has this bug.
+          Teaching cases A/B are derived from the packaged extract (B remaps labels) — not two patients.
         </p>
-        <div id="testing-list" class="checklist"></div>
+        <ol class="steps" id="core-steps">
+          <li data-step="1" class="step active">Feature &amp; initial tests</li>
+          <li data-step="2" class="step">Predict</li>
+          <li data-step="3" class="step">Run A then B</li>
+          <li data-step="4" class="step">Compare evidence</li>
+          <li data-step="5" class="step">Stronger test</li>
+          <li data-step="6" class="step">Fix &amp; verify</li>
+        </ol>
+        <div id="core-panel" class="panel"></div>
+        <pre id="core-terminal" class="lab-terminal hidden" aria-live="polite"></pre>
         <div class="nav">
-          <button class="btn" data-go="use">Back</button>
-          <button class="btn primary" data-go="repro">Continue</button>
+          <button class="btn" type="button" data-go="intro">Back</button>
+          <button class="btn" type="button" id="core-back">Previous step</button>
+          <button class="btn primary" type="button" id="core-next">Continue</button>
+          <button class="btn" type="button" data-go="challenges">Testing menu</button>
         </div>
       </section>
 
-      <section id="repro" class="screen hidden">
-        <h2>Reproducibility checklist</h2>
-        <pre class="flow">Clone → Install → Run one command → Reproduce the example result</pre>
-        <div id="repro-list" class="checklist"></div>
+      <section id="challenges" class="screen hidden">
+        <h2>Layered testing challenges</h2>
+        <p>Optional depth. Affine geometry is listed under advanced.</p>
+        <div class="level-block">
+          <h3>Level 1 — Behaviour and input contracts</h3>
+          <div class="nav">
+            <button class="btn" type="button" data-challenge="level1_dice">Dice examples</button>
+            <button class="btn" type="button" data-challenge="level1_shapes">Shape mismatch</button>
+            <button class="btn" type="button" data-challenge="level1_invalid">Invalid inputs</button>
+          </div>
+        </div>
+        <div class="level-block">
+          <h3>Level 2 — Integration and regressions</h3>
+          <div class="nav">
+            <button class="btn" type="button" data-challenge="level2_geometry">Saved geometry (advanced)</button>
+            <button class="btn" type="button" data-challenge="level2_per_label">Mean vs per-label Dice</button>
+          </div>
+        </div>
+        <div class="level-block">
+          <h3>Level 3 — Reproducibility and evidence</h3>
+          <div class="nav">
+            <button class="btn" type="button" data-challenge="level3_evidence">Arrays, geometry, provenance</button>
+          </div>
+        </div>
+        <div id="challenge-detail" class="panel hidden"></div>
+        <pre id="challenge-terminal" class="lab-terminal hidden" aria-live="polite"></pre>
         <div class="nav">
-          <button class="btn" data-go="testing">Back</button>
-          <button class="btn primary" data-go="lab">Continue to lab</button>
+          <button class="btn" type="button" data-go="core">Back to core</button>
+          <button class="btn primary" type="button" data-go="handover">README handover</button>
         </div>
       </section>
 
-      <section id="lab" class="screen hidden">
-        <h2>Run the lab</h2>
+      <section id="handover" class="screen hidden">
+        <h2>Research handover review</h2>
         <p>
-          Click to run the cached demo, smoke checks, or reproduction.
-          Live mode needs <code>python scripts/tutorial_lab.py</code>; otherwise you see a pre-recorded sample.
+          A collaborator must install, run the cached example, verify outputs, and understand limits using only the README.
         </p>
-        <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
-        <div class="lab-actions">
-          <button class="btn primary" type="button" data-lab="demo">Run demo</button>
-          <button class="btn primary" type="button" data-lab="smoke">Run smoke test</button>
-          <button class="btn primary" type="button" data-lab="reproduce">Reproduce example</button>
+        <div class="panel">
+          <h3>1. Incomplete README — identify problems first</h3>
+          <pre id="readme-incomplete" class="code-box"></pre>
+          <label class="field-label" for="readme-notes">What is missing or misleading?</label>
+          <textarea id="readme-notes" rows="3" placeholder="Notes before revealing the improved version…"></textarea>
+          <div class="nav">
+            <button class="btn" type="button" id="reveal-readme">Reveal improved README</button>
+            <button class="btn" type="button" id="copy-readme-prompt">Copy audit prompt</button>
+          </div>
+          <div id="readme-improved-wrap" class="hidden">
+            <h3>2. Improved README</h3>
+            <pre id="readme-improved" class="code-box"></pre>
+            <p class="callout">Facilitator pair: follow the real repository README cold; record the first ambiguity.</p>
+          </div>
         </div>
-        <pre id="lab-terminal" class="lab-terminal" aria-live="polite">Ready. Choose an action above.</pre>
-        <div id="lab-overlay-wrap" class="lab-overlay hidden">
-          <img id="lab-overlay" alt="Lab overlay preview" />
+        <div class="panel">
+          <h3>Prompt stages</h3>
+          <div class="scenario-tabs" id="prompt-tabs"></div>
+          <pre id="prompt-text" class="prompt-box"></pre>
+          <button class="btn" type="button" id="copy-stage-prompt">Copy prompt</button>
         </div>
         <div class="nav">
-          <button class="btn" data-go="repro">Back</button>
-          <button class="btn primary" data-go="assess">Score AI-generated tests</button>
-        </div>
-      </section>
-
-      <section id="assess" class="screen hidden">
-        <h2>Score AI-generated tests</h2>
-        <p>
-          Same task, three prompts. Read the generated test, score it yourself (0–6),
-          then compare with the answer key.
-        </p>
-        <div class="scenario-tabs" id="assess-tabs" role="tablist"></div>
-        <article class="assess-panel">
-          <h3>Prompt</h3>
-          <pre id="assess-prompt" class="prompt-box"></pre>
-          <div class="pack-actions">
-            <button class="btn" type="button" id="copy-prompt">Copy prompt</button>
-          </div>
-          <h3>Generated test</h3>
-          <pre id="assess-code" class="code-box"></pre>
-          <h3>Your score <span id="assess-your-total" class="score-pill">0 / 6</span></h3>
-          <div id="assess-rubric" class="rubric-list"></div>
-          <div class="pack-actions">
-            <button class="btn" type="button" id="assess-reset">Reset my scores</button>
-            <button class="btn primary" type="button" id="assess-compare">Compare with answer key</button>
-          </div>
-          <div id="assess-feedback" class="pack-feedback hidden" aria-live="polite"></div>
-        </article>
-        <div class="nav">
-          <button class="btn" data-go="lab">Back</button>
-          <button class="btn primary" data-go="scenarios">Continue to packing</button>
-        </div>
-      </section>
-
-      <section id="scenarios" class="screen hidden">
-        <h2>Pack what you need</h2>
-        <p>
-          Drag items into the bag for this use case — or tap an item, then tap the bag.
-          Leave overkill items in the pool. Then check your packing.
-        </p>
-        <div class="scenario-tabs" id="scenario-tabs" role="tablist"></div>
-        <div class="pack-board">
-          <div class="pack-zone pool-zone">
-            <h3>Available evidence</h3>
-            <p class="caption" id="pool-hint">Tap or drag items you would include.</p>
-            <div id="item-pool" class="item-pool" aria-label="Available evidence"></div>
-          </div>
-          <div class="pack-zone bag-zone" id="bag-drop">
-            <h3 id="bag-title">Your bag</h3>
-            <p class="caption" id="bag-hint">Drop essentials here</p>
-            <div id="item-bag" class="item-bag" aria-label="Packed items"></div>
-          </div>
-        </div>
-        <div class="pack-actions">
-          <button class="btn" id="pack-reset" type="button">Empty bag</button>
-          <button class="btn primary" id="pack-check" type="button">Check my packing</button>
-        </div>
-        <div id="pack-feedback" class="pack-feedback hidden" aria-live="polite"></div>
-        <div class="nav">
-          <button class="btn" data-go="assess">Back</button>
-          <button class="btn primary" id="scenario-next" type="button">Next scenario</button>
+          <button class="btn" type="button" data-go="challenges">Back</button>
+          <button class="btn primary" type="button" data-go="summary">Evidence summary</button>
         </div>
       </section>
 
       <section id="summary" class="screen hidden">
-        <h2>Final readiness summary</h2>
-        <p class="caption">Educational indicator only — not a clinical certification.</p>
+        <h2>Evidence-based handover summary</h2>
+        <p class="caption">Completion is not verification. Distinguish live runs, samples, detections, and reveals.</p>
         <div id="summary-box" class="summary"></div>
         <div class="nav">
-          <button class="btn" data-go="scenarios">Back</button>
-          <button class="btn" id="restart">Start over</button>
+          <button class="btn primary" type="button" id="copy-summary">Copy Markdown summary</button>
+          <button class="btn" type="button" data-go="landing">Home</button>
+          <button class="btn" type="button" id="restart">Reset session evidence</button>
         </div>
       </section>
     </main>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260921b"></script>
   </body>
 </html>

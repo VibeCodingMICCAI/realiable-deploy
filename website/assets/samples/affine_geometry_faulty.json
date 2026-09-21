@@ -1,0 +1,129 @@
+{
+  "ok": false,
+  "action": "affine_geometry_faulty",
+  "challenge_id": "affine_geometry_faulty",
+  "title": "Geometry check on faulty variant",
+  "mode": "sample",
+  "command": "challenge:affine suite=geometry variant=faulty",
+  "message": "One or more listed checks failed.",
+  "checks": [
+    {
+      "name": "saved_affine_matches_input",
+      "pass": false,
+      "expected": [
+        [
+          0.7,
+          0.0,
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          0.8,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.2,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observed": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "detail": "rtol=0, atol=1e-5 after NIfTI save/load"
+    }
+  ],
+  "explanation": "Expected failure: the seeded defect writes an identity affine. A failing geometry check here means the test detected the defect \u2014 not an unexpected execution error.",
+  "meta": {
+    "variant": "faulty",
+    "suite": "geometry",
+    "synthetic": true,
+    "case_dir": "outputs\\lab\\sample_gen\\affine_geometry_faulty\\affine_4be3cea95c4248e6aeee9a3980d00765\\case",
+    "input_affine": [
+      [
+        0.7,
+        0.0,
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        0.8,
+        0.0,
+        -4.5
+      ],
+      [
+        0.0,
+        0.0,
+        1.2,
+        3.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "output_affine": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affines_equal": false
+  },
+  "sample_note": "Pre-recorded example from the same verification functions. Code did not run in the browser."
+}

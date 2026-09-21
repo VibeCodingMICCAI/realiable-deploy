@@ -2,12 +2,14 @@
   "ok": true,
   "action": "smoke",
   "mode": "sample",
-  "command": "python -m pytest tests/test_smoke.py -q",
-  "message": "Smoke checks passed. (pre-recorded sample — start tutorial_lab.py for live run)",
+  "command": "run_cached_pipeline + validate_segmentation (packaged case_001)",
+  "message": "Smoke checks passed. (pre-recorded sample)",
   "checks": [
-    { "name": "output_exists", "pass": true, "detail": "outputs/lab/smoke/prediction.nii.gz" },
-    { "name": "mode_cached", "pass": true, "detail": "cached" },
-    { "name": "shape_64", "pass": true, "detail": "[64, 64, 64]" },
-    { "name": "valid_labels", "pass": true, "detail": "labels look valid" }
-  ]
+    { "name": "output_exists", "pass": true, "expected": true, "observed": true, "detail": "prediction.nii.gz" },
+    { "name": "mode_cached", "pass": true, "expected": "cached", "observed": "cached", "detail": "" },
+    { "name": "shape_64", "pass": true, "expected": [64, 64, 64], "observed": [64, 64, 64], "detail": "" },
+    { "name": "valid_labels", "pass": true, "expected": "labels in {0..5}", "observed": "ok", "detail": "" }
+  ],
+  "explanation": "Pre-recorded sample. Code did not run in the browser.",
+  "sample_note": "Pre-recorded example. Code did not run in the browser."
 }

@@ -1,0 +1,80 @@
+{
+  "ok": false,
+  "action": "stale_regression_faulty",
+  "challenge_id": "stale_regression_faulty",
+  "title": "Regression: two cases, one output directory",
+  "mode": "sample",
+  "command": "challenge:stale_regression reuse=True",
+  "message": "Expected failure: sequential regression detected stale reuse of case A's prediction for case B.",
+  "checks": [
+    {
+      "name": "sequential_B_matches_own_reference",
+      "pass": false,
+      "expected": true,
+      "observed": false,
+      "detail": "Failed for the intended reason: shared output reused A's prediction."
+    },
+    {
+      "name": "not_path_only",
+      "pass": true,
+      "expected": "compare arrays to references",
+      "observed": "snapshots used before second call",
+      "detail": "Both calls may return the same path; the test snapshots the first file."
+    }
+  ],
+  "explanation": "Faulty policy returns an existing prediction.nii.gz without binding it to the current input. Correct policy always processes the current case and overwrites the output.",
+  "meta": {
+    "reuse_existing": true,
+    "session_dir": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57",
+    "shared_output": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57\\shared_out\\prediction.nii.gz",
+    "result_a": {
+      "ok": true,
+      "reused_existing": false,
+      "provider_invoked": true,
+      "output": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57\\cases\\case_A\\input\\teach_A_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "reuse_if_exists"
+    },
+    "result_b": {
+      "ok": true,
+      "reused_existing": true,
+      "provider_invoked": false,
+      "output": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57\\shared_out\\prediction.nii.gz",
+      "input": "outputs\\lab\\sample_gen2\\stale_regression_faulty\\seq_78ebdc57\\cases\\case_B\\input\\teach_B_mri.nii.gz",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "labels_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "policy": "reuse_if_exists"
+    },
+    "dice_B_vs_Bref": 0.2,
+    "dice_B_vs_Aref": 1.0,
+    "B_matches_B_reference": false,
+    "B_looks_like_A": true,
+    "teaching_note": "Teaching derivative of the packaged extract. Case B remaps labels for a visibly different reference \u2014 not a second patient."
+  },
+  "expected_failure": true,
+  "sample_note": "Pre-recorded. Not executed in the browser."
+}

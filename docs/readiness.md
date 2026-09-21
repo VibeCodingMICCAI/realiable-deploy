@@ -1,20 +1,17 @@
-# Readiness for intended use
+# Readiness and intended use
+
+This tutorial’s final screen is an **evidence summary**, not a readiness score.
 
 ```text
-Vibe-coded prototype
-        ↓
-Tested prototype
-        ↓
-Reproducible prototype
-        ↓
-Demo / publication / open-source ready
-        ↓
-Clinical / production software considerations
+Executed checks
+  ≠ revealed solutions
+  ≠ clinical readiness
 ```
 
-Completing software tests does **not** make a system clinically ready.
+Distinguish:
 
-Clinical / production software usually also needs requirements, verification,
-validation, risk management, change control, cybersecurity, usability,
-monitoring and regulatory assessment. This tutorial only introduces that
-broader landscape.
+- research sharing / collaborator handover;
+- general production software deployment;
+- clinical use (out of scope here).
+
+Software tests on a cached or synthetic path do not certify clinical performance.
