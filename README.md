@@ -44,11 +44,11 @@ Also useful: `python scripts/reproduce_example.py` → `outputs/reproduce/`.
 - **Default / stand:** precomputed prediction for the packaged case.
 - **Optional real inference:** `pip install -e ".[infer]"` and configure `VIBE_NNUNET_MODEL` — see [`model/README.md`](model/README.md).
 
-## Three activities (facilitator-led)
+## Three activities
 
-1. **Explore the tool** (~5 min) — MRI / mask / overlay; what should we check before handover?
-2. **Generate useful tests** (~15 min) — mean score can hide a missing structure; overlay may not match the saved segmentation.
-3. **Hand over the tool** (~8 min) — what a useful README must answer.
+1. **Explore the tool** — MRI / mask / overlay; what should we check before handover?
+2. **Generate useful tests** — mean score can hide a missing structure; overlay may not match the saved segmentation.
+3. **Hand over the tool** — what a useful README must answer.
 
 Guides: [`docs/activity.md`](docs/activity.md) · [`docs/facilitator.md`](docs/facilitator.md)  
 Prompt recipes (optional): [`docs/vibe_coding_recipes.md`](docs/vibe_coding_recipes.md)
