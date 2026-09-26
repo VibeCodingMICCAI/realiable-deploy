@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "action": "mean_dice_regression_corrected",
+  "challenge_id": "mean_dice_regression_corrected",
+  "title": "Stronger test \u00b7 per-label gate (corrected)",
+  "mode": "sample",
+  "command": "challenge:mean_dice_regression_corrected",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "per_label_gate_accepts",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": "Packaged prediction keeps all five structures."
+    },
+    {
+      "name": "critical_structure_ok",
+      "pass": true,
+      "expected": "Lateral Tibial Cartilage Dice >= 0.5",
+      "observed": 0.850895,
+      "detail": ""
+    }
+  ],
+  "explanation": "Minimal fix: require a per-label floor (and keep checking mean). Do not rely on mean Dice alone when structures matter unequally.",
+  "meta": {
+    "strong": {
+      "accepted": true,
+      "mean_dice": 0.917652,
+      "per_label": {
+        "1": 0.988005,
+        "2": 0.885161,
+        "3": 0.988905,
+        "4": 0.875294,
+        "5": 0.850895
+      },
+      "policy": "mean_and_per_label",
+      "mean_threshold": 0.7,
+      "per_label_threshold": 0.5,
+      "critical_label": 5,
+      "critical_name": "Lateral Tibial Cartilage",
+      "critical_dice": 0.850895
+    }
+  }
+}

@@ -6,78 +6,32 @@
     <title>From Vibe Coding to Trustworthy AI</title>
     <meta
       name="description"
-      content="MICCAI stand: understand a knee MRI segmentation tool, catch stale result reuse, review README handover."
+      content="Facilitator-led MICCAI stand: explore a knee MRI tool, write a useful test, hand over with a README."
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header class="topbar">
+      <p class="eyebrow">MICCAI interactive stand · ~25–30 min</p>
+      <nav class="main-nav" aria-label="Activities">
+        <button type="button" class="nav-tab active" data-go="explore">1 · Explore the tool</button>
+        <button type="button" class="nav-tab" data-go="tests">2 · Generate useful tests</button>
+        <button type="button" class="nav-tab" data-go="handover">3 · Hand over the tool</button>
+      </nav>
+      <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
+    </header>
+
     <main class="shell">
-      <section id="landing" class="screen">
-        <p class="eyebrow">MICCAI tutorial · research software handover</p>
-        <h1>From Vibe Coding to Trustworthy AI</h1>
+      <!-- Activity 1 -->
+      <section id="explore" class="screen">
+        <h1>Explore the tool</h1>
         <p class="lede">
-          Understand the tool, then ask: if tests are green, is the result still for the right case?
+          We have built a knee MRI segmentation tool with AI assistance. Now we want to hand it
+          over to another researcher.
         </p>
-        <p>
-          Interactive stand for medical imaging / ML researchers. We use a
-          <strong>cached</strong> knee MRI segmentation extract — not clinical certification,
-          not model training.
-        </p>
-        <div class="route-grid">
-          <button class="route-card" type="button" data-go="intro" data-route="quick">
-            <strong>Quick route · 5–10 min</strong>
-            <span>Tool intro → stale-result challenge → evidence summary.</span>
-          </button>
-          <button class="route-card" type="button" data-go="intro" data-route="full">
-            <strong>Full route · ~30 min</strong>
-            <span>Intro → core challenge → testing menu → README handover → summary.</span>
-          </button>
-        </div>
-        <p class="caption">Jump to an activity:</p>
-        <div class="nav">
-          <button class="btn" type="button" data-go="intro">0 · What does this tool do?</button>
-          <button class="btn" type="button" data-go="core">1 · Changed input, unchanged result</button>
-          <button class="btn" type="button" data-go="challenges">2 · Testing menu</button>
-          <button class="btn" type="button" data-go="handover">3 · README handover</button>
-          <button class="btn" type="button" data-go="summary">Evidence summary</button>
-          <a class="btn" href="activity.html">Activity guide</a>
-        </div>
-        <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
-      </section>
-
-      <section id="intro" class="screen hidden">
-        <h2>What does this tool do?</h2>
-        <p>
-          Multi-structure <strong>knee MRI segmentation</strong>: the software takes a 3D MRI volume
-          and produces a label map (and optional visuals / provenance). This page uses the packaged
-          tutorial extract <code>examples/case_001</code> (downsampled).
-        </p>
-
-        <details open>
-          <summary>Overview (about 2 minutes)</summary>
-          <div class="panel">
-            <ul>
-              <li><strong>User provides:</strong> a 3D knee MRI in <code>.nii.gz</code> (NIfTI).</li>
-              <li><strong>Software produces:</strong> a segmentation NIfTI (integer labels per voxel), optional overlay PNG, optional provenance JSON.</li>
-              <li><strong>Research use:</strong> draft structure masks for further analysis — not a clinical device.</li>
-              <li><strong>This demo executes:</strong> the <em>cached</em> path (load packaged prediction → validate → save/visualise). It does <em>not</em> run full nnU-Net GPU inference unless you configure optional weights separately.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details>
-          <summary>Processing flow: real inference vs tutorial cache</summary>
-          <pre class="flow">Real inference (optional):
-  MRI → preprocess / nnU-Net predict → segmentation NIfTI → save
-
-Cached tutorial (default here):
-  Example MRI + precomputed prediction → validate/load → save result + overlay
-
-Mode label: “live lab” = Python ran on this machine. It still uses the cached prediction unless you enable optional inference.</pre>
-        </details>
 
         <div class="panel">
-          <h3>Interactive slice view</h3>
+          <h2>What you see</h2>
           <p class="caption" id="intro-slice-caption">Loading slice assets…</p>
           <div class="intro-controls">
             <label>Axial slice <span id="slice-label">—</span>
@@ -85,11 +39,9 @@ Mode label: “live lab” = Python ran on this machine. It still uses the cache
             </label>
             <label>View
               <select id="view-mode">
-                <option value="mri">MRI only</option>
-                <option value="pred">Segmentation mask</option>
-                <option value="overlay" selected>MRI + overlay</option>
-                <option value="gt">Ground truth mask (reference)</option>
-                <option value="gt_overlay">MRI + ground truth</option>
+                <option value="mri">Input MRI</option>
+                <option value="pred">Output segmentation mask</option>
+                <option value="overlay" selected>MRI + segmentation overlay</option>
               </select>
             </label>
             <label>Overlay opacity
@@ -97,127 +49,286 @@ Mode label: “live lab” = Python ran on this machine. It still uses the cache
             </label>
           </div>
           <div class="intro-stage">
-            <img id="intro-img" alt="Knee MRI slice" />
+            <img id="intro-img" alt="Knee MRI or segmentation slice" />
             <div id="intro-overlay-img" class="intro-overlay-layer" aria-hidden="true"></div>
           </div>
           <div id="intro-legend" class="legend"></div>
-          <p class="caption">
-            Ground truth is a <strong>reference annotation for evaluation</strong>, not an input required for ordinary inference.
-            Prediction and ground truth must not be confused.
-          </p>
+          <ul class="plain-list">
+            <li><strong>Input:</strong> a 3D knee MRI as <code>.nii.gz</code> (NIfTI).</li>
+            <li><strong>Output:</strong> a segmentation label map (also <code>.nii.gz</code>) plus an overlay PNG for inspection.</li>
+            <li><strong>Display:</strong> one 2D axial slice from the 3D volume (subset of slices exported for the stand).</li>
+            <li><strong>This stand:</strong> uses <em>precomputed</em> predictions to show the software workflow. It does not run fresh nnU-Net inference by default.</li>
+          </ul>
         </div>
 
         <details>
-          <summary>Technical details (from packaged files)</summary>
-          <div class="panel" id="intro-tech"></div>
+          <summary>Technical details (verified from packaged files)</summary>
+          <div id="intro-tech" class="panel"></div>
         </details>
 
-        <div class="nav">
-          <button class="btn" type="button" data-go="landing">Home</button>
-          <button class="btn primary" type="button" data-go="core">Continue to core challenge</button>
+        <div class="panel discuss">
+          <h2>Discussion</h2>
+          <p class="prompt-line">Before handing this tool to a colleague, what should we check?</p>
+          <button type="button" class="btn" id="reveal-expectations">Show example expectations</button>
+          <div id="expectations" class="reveal hidden">
+            <ol>
+              <li>A valid input produces a readable segmentation.</li>
+              <li>An invalid or missing input produces a clear error.</li>
+              <li>Reported quality checks reflect each anatomical structure — not only a mean score.</li>
+            </ol>
+          </div>
         </div>
-      </section>
 
-      <section id="core" class="screen hidden">
-        <h2>Changed input, unchanged result</h2>
-        <p class="caption">
-          Seeded teaching defect: “skip segmentation if prediction.nii.gz already exists.”
-          Not a claim that the production cached pipeline has this bug.
-          Teaching cases A/B are derived from the packaged extract (B remaps labels) — not two patients.
+        <p class="transition">
+          A successful demonstration shows one run worked. Tests help us check specific behaviours repeatedly.
         </p>
-        <ol class="steps" id="core-steps">
-          <li data-step="1" class="step active">Feature &amp; initial tests</li>
-          <li data-step="2" class="step">Predict</li>
-          <li data-step="3" class="step">Run A then B</li>
-          <li data-step="4" class="step">Compare evidence</li>
-          <li data-step="5" class="step">Stronger test</li>
-          <li data-step="6" class="step">Fix &amp; verify</li>
-        </ol>
-        <div id="core-panel" class="panel"></div>
-        <pre id="core-terminal" class="lab-terminal hidden" aria-live="polite"></pre>
         <div class="nav">
-          <button class="btn" type="button" data-go="intro">Back</button>
-          <button class="btn" type="button" id="core-back">Previous step</button>
-          <button class="btn primary" type="button" id="core-next">Continue</button>
-          <button class="btn" type="button" data-go="challenges">Testing menu</button>
+          <button type="button" class="btn primary" data-go="tests">Continue to Activity 2</button>
         </div>
       </section>
 
-      <section id="challenges" class="screen hidden">
-        <h2>Layered testing challenges</h2>
-        <p>Optional depth. Affine geometry is listed under advanced.</p>
-        <div class="level-block">
-          <h3>Level 1 — Behaviour and input contracts</h3>
-          <div class="nav">
-            <button class="btn" type="button" data-challenge="level1_dice">Dice examples</button>
-            <button class="btn" type="button" data-challenge="level1_shapes">Shape mismatch</button>
-            <button class="btn" type="button" data-challenge="level1_invalid">Invalid inputs</button>
-          </div>
+      <!-- Activity 2 -->
+      <section id="tests" class="screen hidden">
+        <h1>Generate useful tests</h1>
+        <p class="lede">
+          Two teaching examples: a high average score that hides a missing cartilage region, and a
+          preview image that does not match the saved segmentation.
+        </p>
+
+        <div class="panel">
+          <h2>A. Define a useful test</h2>
+          <p>A test prepares a scenario, runs the software, and compares the actual result with an explicitly defined expectation.</p>
         </div>
-        <div class="level-block">
-          <h3>Level 2 — Integration and regressions</h3>
-          <div class="nav">
-            <button class="btn" type="button" data-challenge="level2_geometry">Saved geometry (advanced)</button>
-            <button class="btn" type="button" data-challenge="level2_per_label">Mean vs per-label Dice</button>
+
+        <!-- Example 1 -->
+        <div class="panel">
+          <h2>Example 1 · A good average score can hide a missing part</h2>
+          <div class="aaa">
+            <div><strong>Set up</strong><span>Take a knee segmentation and delete one cartilage region (label 5). Keep the reference labels the same.</span></div>
+            <div><strong>Run</strong><span>Ask the tool’s quality check: “Is this result good enough?”</span></div>
+            <div><strong>Check</strong><span>Each anatomical part should score well on its own — a high average alone is not enough.</span></div>
           </div>
-        </div>
-        <div class="level-block">
-          <h3>Level 3 — Reproducibility and evidence</h3>
+          <p>Vague prompt:</p>
+          <pre class="prompt-box">Write tests for this segmentation tool.</pre>
+          <p>Plausible generated checks:</p>
+          <pre class="code-box">def test_quality_ok(pred, gt):
+    assert mean_dice(pred, gt) >= 0.70
+    assert pred.max() > 0</pre>
           <div class="nav">
-            <button class="btn" type="button" data-challenge="level3_evidence">Arrays, geometry, provenance</button>
+            <button type="button" class="btn primary run-btn" id="run-mean-weak" data-busy-label="Running…">Run initial checks</button>
+            <button type="button" class="btn primary run-btn" id="run-mean-reveal" data-busy-label="Inspecting…">Inspect mean vs per-label</button>
           </div>
+          <pre id="mean-terminal" class="lab-terminal" aria-live="polite">Ready.</pre>
+          <div id="mean-compare" class="ab-compare hidden">
+            <div>
+              <strong>Full prediction (mid slice)</strong>
+              <img src="assets/teaching/mean_full.png" alt="Full segmentation overlay" />
+            </div>
+            <div>
+              <strong>Teaching defect: label 5 removed</strong>
+              <img src="assets/teaching/mean_missing_label5.png" alt="Segmentation missing lateral tibial cartilage" />
+            </div>
+            <div class="ab-expected-text">
+              <strong>What the numbers show</strong>
+              <p id="mean-compare-text">Mean Dice can stay near 0.75 while label 5 Dice is 0.</p>
+            </div>
+          </div>
+          <p class="prompt-line">Does a good mean Dice prove every structure is present?</p>
+          <button type="button" class="btn" id="reveal-mean-dx">Reveal diagnosis</button>
+          <div id="mean-dx" class="reveal hidden">
+            <p>
+              The teaching quality gate only checks mean Dice. Lateral Tibial Cartilage can disappear
+              while the aggregate score still looks acceptable.
+            </p>
+          </div>
+          <p>Improved prompt (copyable):</p>
+          <pre class="prompt-box" id="mean-prompt">Inspect the quality-gate helpers in vibe_to_trust.challenges.stand_examples
+(accept_by_mean_only vs accept_with_per_label).
+
+Add a pytest that builds a teaching prediction from the packaged case by removing
+label 5 (Lateral Tibial Cartilage). Keep the ground truth unchanged.
+
+Assert that a mean-only gate may still accept, while a gate that requires every
+foreground label Dice >= 0.5 rejects this prediction.
+
+Do not only assert mean Dice. Do not modify examples/case_001.
+Run the test and explain what the result demonstrates.</pre>
+          <button type="button" class="btn" id="copy-mean-prompt">Copy prompt</button>
+          <div class="nav">
+            <button type="button" class="btn primary run-btn" id="run-mean-faulty">Run stronger test on faulty gate</button>
+            <button type="button" class="btn primary run-btn" id="run-mean-fixed">Run stronger test on corrected gate</button>
+          </div>
+          <pre id="mean-verify" class="lab-terminal" aria-live="polite">Ready.</pre>
+          <details>
+            <summary>Reveal minimal fix</summary>
+            <p>Require a per-label Dice floor for each structure, not mean Dice alone.</p>
+          </details>
         </div>
-        <div id="challenge-detail" class="panel hidden"></div>
-        <pre id="challenge-terminal" class="lab-terminal hidden" aria-live="polite"></pre>
+
+        <!-- Example 2 -->
+        <div class="panel">
+          <h2>Example 2 · The preview image may not match the saved result</h2>
+          <div class="aaa">
+            <div><strong>Set up</strong><span>Save the segmentation file and a preview overlay PNG for the same case.</span></div>
+            <div><strong>Run</strong><span>Open the overlay people use to visually check the result.</span></div>
+            <div><strong>Check</strong><span>That image should show the same mid-slice as the saved segmentation — not an old or wrong slice.</span></div>
+          </div>
+          <p>Vague checks often only ask whether <code>overlay.png</code> exists.</p>
+          <div class="nav">
+            <button type="button" class="btn primary run-btn" id="run-overlay-weak" data-busy-label="Running…">Run initial checks</button>
+            <button type="button" class="btn primary run-btn" id="run-overlay-reveal" data-busy-label="Comparing…">Compare overlay to prediction</button>
+          </div>
+          <pre id="overlay-terminal" class="lab-terminal" aria-live="polite">Ready.</pre>
+          <div id="overlay-compare" class="ab-compare hidden">
+            <div>
+              <strong>Bound overlay (mid slice)</strong>
+              <img src="assets/teaching/overlay_bound.png" alt="Overlay bound to mid-slice prediction" />
+            </div>
+            <div>
+              <strong>Teaching defect: wrong slice</strong>
+              <img src="assets/teaching/overlay_stale.png" alt="Overlay from a different axial slice" />
+            </div>
+            <div class="ab-expected-text">
+              <strong>What went wrong</strong>
+              <p id="overlay-compare-text">Same NIfTI prediction; PNG written from z=0 instead of the mid slice.</p>
+            </div>
+          </div>
+          <p class="prompt-line">Does a valid-looking overlay prove it matches the current result?</p>
+          <button type="button" class="btn" id="reveal-overlay-dx">Reveal diagnosis</button>
+          <div id="overlay-dx" class="reveal hidden">
+            <p>
+              The teaching exporter saves the correct prediction but writes <code>overlay.png</code>
+              from another axial slice. Existence checks miss this.
+            </p>
+          </div>
+          <p>Improved prompt (copyable):</p>
+          <pre class="prompt-box" id="overlay-prompt">Inspect export_case_outputs in vibe_to_trust.challenges.stand_examples.
+
+Add a pytest that exports with bind_overlay_to_prediction=False, then regenerates
+the expected mid-slice overlay from the saved prediction and compares file content
+(e.g. SHA-256).
+
+Assert the unbound export fails that comparison, and bind_overlay_to_prediction=True passes.
+
+Do not only check that overlay.png exists. Do not modify examples/case_001.
+Run the test and explain what the result demonstrates.</pre>
+          <button type="button" class="btn" id="copy-overlay-prompt">Copy prompt</button>
+          <div class="nav">
+            <button type="button" class="btn primary run-btn" id="run-overlay-faulty">Run stronger test on faulty export</button>
+            <button type="button" class="btn primary run-btn" id="run-overlay-fixed">Run stronger test on corrected export</button>
+          </div>
+          <pre id="overlay-verify" class="lab-terminal" aria-live="polite">Ready.</pre>
+          <details>
+            <summary>Reveal minimal fix</summary>
+            <p>Always regenerate <code>overlay.png</code> from the current prediction at the intended slice index.</p>
+          </details>
+        </div>
+
+        <div class="panel">
+          <h3>Review</h3>
+          <ul class="plain-list">
+            <li>Does the test inspect the quantity that can actually go wrong?</li>
+            <li>Does it fail when the targeted defect is present?</li>
+            <li>Would keeping these tests catch recurrence after future edits?</li>
+          </ul>
+        </div>
+
         <div class="nav">
-          <button class="btn" type="button" data-go="core">Back to core</button>
-          <button class="btn primary" type="button" data-go="handover">README handover</button>
+          <button type="button" class="btn" data-go="explore">Back</button>
+          <button type="button" class="btn primary" data-go="handover">Continue to Activity 3</button>
         </div>
       </section>
 
+      <!-- Activity 3 -->
       <section id="handover" class="screen hidden">
-        <h2>Research handover review</h2>
-        <p>
-          A collaborator must install, run the cached example, verify outputs, and understand limits using only the README.
+        <h1>Hand over the tool</h1>
+        <p class="lede">
+          The tool now has a test for the issue we found. Tomorrow you are unavailable.
+          Can another researcher run and check it using only the README?
         </p>
-        <div class="panel">
-          <h3>1. Incomplete README — identify problems first</h3>
-          <pre id="readme-incomplete" class="code-box"></pre>
-          <label class="field-label" for="readme-notes">What is missing or misleading?</label>
-          <textarea id="readme-notes" rows="3" placeholder="Notes before revealing the improved version…"></textarea>
-          <div class="nav">
-            <button class="btn" type="button" id="reveal-readme">Reveal improved README</button>
-            <button class="btn" type="button" id="copy-readme-prompt">Copy audit prompt</button>
-          </div>
-          <div id="readme-improved-wrap" class="hidden">
-            <h3>2. Improved README</h3>
-            <pre id="readme-improved" class="code-box"></pre>
-            <p class="callout">Facilitator pair: follow the real repository README cold; record the first ambiguity.</p>
-          </div>
-        </div>
-        <div class="panel">
-          <h3>Prompt stages</h3>
-          <div class="scenario-tabs" id="prompt-tabs"></div>
-          <pre id="prompt-text" class="prompt-box"></pre>
-          <button class="btn" type="button" id="copy-stage-prompt">Copy prompt</button>
-        </div>
-        <div class="nav">
-          <button class="btn" type="button" data-go="challenges">Back</button>
-          <button class="btn primary" type="button" data-go="summary">Evidence summary</button>
-        </div>
-      </section>
 
-      <section id="summary" class="screen hidden">
-        <h2>Evidence-based handover summary</h2>
-        <p class="caption">Completion is not verification. Distinguish live runs, samples, detections, and reveals.</p>
-        <div id="summary-box" class="summary"></div>
+        <div class="panel">
+          <h2>Incomplete README</h2>
+          <pre class="code-box">Knee MRI segmentation tool.
+Install the dependencies and run demo.py.
+Results are saved in the output folder.</pre>
+          <p class="prompt-line">What would you need to ask the author before you could use this?</p>
+          <button type="button" class="btn" id="reveal-readme-qs">Show five questions a useful README answers</button>
+          <div id="readme-qs" class="reveal hidden">
+            <ol>
+              <li>What does the tool do, and what are its limitations?</li>
+              <li>How do I install and run it?</li>
+              <li>What input do I need?</li>
+              <li>What output should I expect, and where?</li>
+              <li>How do I run the checks and interpret the results?</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Ask AI to improve the README</h2>
+          <pre class="prompt-box" id="readme-prompt">Inspect this repository and improve its README for a researcher who has not used the tool before.
+
+Explain:
+1. What the tool does and its limitations.
+2. Required inputs and example data.
+3. Installation and exact commands, including the working directory.
+4. Expected output files and how to inspect them.
+5. How to run the tests and understand the results.
+
+Distinguish cached demonstration from real model inference.
+Verify commands and file paths against the repository.
+Do not invent capabilities or claim checks were run if they were not.
+Keep the README concise.</pre>
+          <button type="button" class="btn" id="copy-readme-prompt">Copy README prompt</button>
+          <button type="button" class="btn" id="reveal-readme-improved">Show improved README highlights</button>
+          <div id="readme-improved" class="reveal hidden">
+            <p><strong>Meaningful additions (aligned with this repository):</strong></p>
+            <ul class="plain-list">
+              <li>Working directory = repository root; <code>pip install -e ".[test]"</code></li>
+              <li>Exact commands: <code>python scripts/demo.py --no-open</code>, <code>python scripts/run_tests.py</code>, <code>python scripts/tutorial_lab.py</code></li>
+              <li>Expected outputs: <code>outputs/demo/prediction.nii.gz</code>, <code>outputs/demo/overlay.png</code></li>
+              <li>Cached demo vs optional real inference (<code>model/README.md</code>)</li>
+              <li>Limitations: downsampled extract; not clinical software</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel discuss">
+          <h2>Practical handover task</h2>
+          <p>
+            Using only the README, identify: (1) the first command to run, (2) where outputs appear,
+            (3) the command used to check the tool.
+          </p>
+        </div>
+
+        <div class="panel closing">
+          <h2>Close</h2>
+          <ol>
+            <li>Define expected behaviour.</li>
+            <li>Ask AI to generate a focused test.</li>
+            <li>Verify that the test detects the intended defect.</li>
+            <li>Document how the next person can run and check the tool.</li>
+          </ol>
+          <p class="caption">
+            Completing this stand does not verify the entire tool or establish clinical readiness.
+          </p>
+          <div class="nav">
+            <a class="btn" href="https://github.com/VibeCodingMICCAI/realiable-deploy#readme" target="_blank" rel="noopener">Repository README</a>
+            <button type="button" class="btn" id="copy-mean-prompt-footer">Copy mean-Dice prompt</button>
+            <button type="button" class="btn" id="copy-overlay-prompt-footer">Copy overlay prompt</button>
+            <button type="button" class="btn" id="copy-readme-prompt-footer">Copy README prompt</button>
+            <a class="btn" href="further.html">Further examples</a>
+            <a class="btn" href="activity.html">Written activity guide</a>
+          </div>
+        </div>
+
         <div class="nav">
-          <button class="btn primary" type="button" id="copy-summary">Copy Markdown summary</button>
-          <button class="btn" type="button" data-go="landing">Home</button>
-          <button class="btn" type="button" id="restart">Reset session evidence</button>
+          <button type="button" class="btn" data-go="tests">Back</button>
+          <button type="button" class="btn" data-go="explore">Back to start</button>
         </div>
       </section>
     </main>
-    <script src="script.js?v=20260921b"></script>
+    <script src="script.js?v=20260922b"></script>
   </body>
 </html>

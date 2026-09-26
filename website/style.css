@@ -22,11 +22,98 @@ body {
   min-height: 100vh;
   line-height: 1.5;
 }
+.topbar {
+  width: min(920px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.25rem 0 0;
+}
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: .75rem 0 .35rem;
+}
+.nav-tab {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  border-radius: 8px;
+  padding: .5rem .85rem;
+  font: inherit;
+  cursor: pointer;
+}
+.nav-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
 .shell {
   width: min(920px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 2rem 0 3rem;
+  padding: 1rem 0 3rem;
 }
+.screen { animation: fade .25s ease; }
+@keyframes fade {
+  from { opacity: .4; }
+  to { opacity: 1; }
+}
+.panel { margin: 1rem 0; }
+.panel.discuss { border-left: 3px solid var(--accent); }
+.panel.closing { border-left: 3px solid var(--accent-2); }
+.plain-list { margin: .5rem 0 0 1.1rem; padding: 0; }
+.plain-list li { margin: .35rem 0; }
+.prompt-line {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--accent-2);
+  margin: .6rem 0;
+}
+.transition {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--accent);
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  margin-top: 1.25rem;
+}
+.reveal {
+  margin-top: .7rem;
+  padding: .75rem 1rem;
+  background: rgba(13,92,82,.06);
+  border-radius: 8px;
+}
+.aaa {
+  display: grid;
+  gap: .65rem;
+  margin-top: .7rem;
+}
+.aaa > div {
+  display: grid;
+  gap: .2rem;
+  padding: .65rem .8rem;
+  background: rgba(31,63,102,.05);
+  border-radius: 8px;
+}
+.aaa strong {
+  font-family: var(--serif);
+  color: var(--accent);
+}
+.ab-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: .75rem;
+  margin: .9rem 0;
+}
+.ab-compare > div {
+  background: #111;
+  color: #eee;
+  border-radius: 8px;
+  padding: .65rem;
+}
+.ab-compare strong { display: block; font-size: .85rem; margin-bottom: .4rem; color: #cfe8e2; }
+.ab-compare img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #000; border-radius: 4px; }
+.ab-compare .caption { color: #b7c2bc; font-size: .78rem; }
+.ab-expected-text p { margin: .45rem 0; font-size: .9rem; line-height: 1.4; }
 .hidden { display: none !important; }
 .eyebrow {
   text-transform: uppercase;

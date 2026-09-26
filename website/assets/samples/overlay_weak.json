@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "action": "overlay_weak",
+  "challenge_id": "overlay_weak",
+  "title": "Initial checks \u00b7 overlay file present",
+  "mode": "sample",
+  "command": "challenge:overlay_weak",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "overlay_exists",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "overlay_is_png",
+      "pass": true,
+      "expected": ".png",
+      "observed": ".png",
+      "detail": ""
+    },
+    {
+      "name": "overlay_nonempty",
+      "pass": true,
+      "expected": "size > 1000 bytes",
+      "observed": 4414,
+      "detail": ""
+    }
+  ],
+  "explanation": "File-existence checks pass while the PNG was written from the wrong axial slice. A valid-looking overlay is not proof it matches the saved segmentation view.",
+  "meta": {
+    "result": {
+      "ok": true,
+      "prediction": "outputs/lab/sample_gen_stand/overlay_weak/overlay_weak_bf6d79db/out/prediction.nii.gz",
+      "overlay": "outputs/lab/sample_gen_stand/overlay_weak/overlay_weak_bf6d79db/out/overlay.png",
+      "expected_overlay": "outputs/lab/sample_gen_stand/overlay_weak/overlay_weak_bf6d79db/out/expected_overlay.png",
+      "overlay_matches_expected": false,
+      "policy": "stale_or_unbound_overlay",
+      "overlay_z": 0,
+      "expected_z": 32,
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    },
+    "assets": {
+      "bound": "assets/teaching/overlay_bound.png",
+      "stale": "assets/teaching/overlay_stale.png"
+    }
+  }
+}

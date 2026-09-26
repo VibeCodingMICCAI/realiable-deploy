@@ -1,10 +1,14 @@
-# Interactive tutorial website
+# Interactive stand website
+
+Facilitator-led three-activity session (Explore → Generate useful tests → Hand over).
 
 ```bash
 python scripts/export_intro_slices.py
 python scripts/tutorial_lab.py
 ```
 
-Screens: landing → **intro** (real slices) → **core** (stale reuse) → challenges → README → evidence.
+Open `http://127.0.0.1:8000` (hard-refresh after updates).
 
-Live lab ≠ fresh nnU-Net inference; cached path remains cached.
+- **Live lab:** allowlisted Python on this machine; cached demo remains cached (not fresh nnU-Net).
+- **Sample mode:** pre-recorded JSON under `assets/samples/`, clearly labelled in the UI.
+- Optional: `further.html`, `activity.html`.

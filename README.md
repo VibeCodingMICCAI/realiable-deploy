@@ -1,45 +1,57 @@
 # From Vibe Coding to Trustworthy AI
 
-### Knee MRI segmentation: tool intro, stale-result testing, README handover
+### Knee MRI segmentation: explore the tool, write useful tests, hand over with a README
 
-Interactive MICCAI stand. Default path uses a **cached** downsampled extract (`examples/case_001`) — not clinical certification.
+Facilitator-led MICCAI stand (~25–30 minutes). Default path uses a **cached** downsampled extract (`examples/case_001`) — not clinical certification, and not fresh nnU-Net inference by default.
 
-## Quick start
+## Clone and run
 
 ```bash
+git clone https://github.com/VibeCodingMICCAI/realiable-deploy.git
+cd realiable-deploy
 python -m pip install -e ".[test]"
-python scripts/export_intro_slices.py
 python scripts/tutorial_lab.py
 ```
 
-Open `http://127.0.0.1:8000` (`/activity.html` for the written guide).
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Run all commands from the **repository root**.
 
-| Activity | Focus |
-|---|---|
-| Intro | What the tool inputs/outputs (real slices) |
-| Core | Changed input, unchanged result (seeded reuse bug) |
-| Menu | Optional layered tests |
-| README | Collaborator handover review |
-
-## Terminal commands
+If intro MRI slices are missing after a sparse checkout:
 
 ```bash
-python scripts/demo.py --no-open
-python scripts/run_tests.py
-python scripts/reproduce_example.py
+python scripts/export_intro_slices.py
 ```
 
-Expected demo outputs: `outputs/demo/prediction.nii.gz`, `outputs/demo/overlay.png`.
+Teaching preview images are created automatically on lab start if needed (or run `python scripts/export_stand_samples.py`).
 
-## Cached vs optional real inference
+## What this tool does
 
-- **Default:** cached pipeline on `examples/case_001/`.
-- **Optional:** `pip install -e ".[infer]"` + `VIBE_NNUNET_MODEL` — see `model/README.md`.
+- **Input:** a 3D knee MRI as `.nii.gz` (see `examples/case_001/`).
+- **Output:** a segmentation label map (`outputs/demo/prediction.nii.gz`) and a mid-slice overlay PNG (`outputs/demo/overlay.png`).
+- **Limitation:** tutorial volumes are intentionally downsampled; research-sharing practice, not production or clinical software.
 
-## Guides
+### Useful commands
 
-- [`docs/activity.md`](docs/activity.md) · [`docs/coordinator_zh.md`](docs/coordinator_zh.md) (中文协调员)  
-- [`docs/vibe_coding_recipes.md`](docs/vibe_coding_recipes.md)
+| Goal | Command | Where to look |
+|---|---|---|
+| Run the cached demo | `python scripts/demo.py --no-open` | `outputs/demo/` |
+| Run automated checks | `python scripts/run_tests.py` | terminal pass/fail |
+| Open the stand | `python scripts/tutorial_lab.py` | browser |
+
+Also useful: `python scripts/reproduce_example.py` → `outputs/reproduce/`.
+
+## Cached demo vs real inference
+
+- **Default / stand:** precomputed prediction for the packaged case.
+- **Optional real inference:** `pip install -e ".[infer]"` and configure `VIBE_NNUNET_MODEL` — see [`model/README.md`](model/README.md).
+
+## Three activities (facilitator-led)
+
+1. **Explore the tool** (~5 min) — MRI / mask / overlay; what should we check before handover?
+2. **Generate useful tests** (~15 min) — mean score can hide a missing structure; overlay may not match the saved segmentation.
+3. **Hand over the tool** (~8 min) — what a useful README must answer.
+
+Guides: [`docs/activity.md`](docs/activity.md) · [`docs/facilitator.md`](docs/facilitator.md)  
+Prompt recipes (optional): [`docs/vibe_coding_recipes.md`](docs/vibe_coding_recipes.md)
 
 ## Verification
 
@@ -47,9 +59,10 @@ Expected demo outputs: `outputs/demo/prediction.nii.gz`, `outputs/demo/overlay.p
 python -m pytest -q
 ```
 
+Live lab buttons execute allowlisted Python on this machine. Sample / static mode shows **pre-recorded** results and labels them as such. Completing the stand does **not** verify the entire tool or clinical readiness.
+
 ## Limitations
 
-- Tutorial volumes are downsampled.  
-- Live lab ≠ fresh nnU-Net inference.  
-- Teaching cases A/B for the core challenge are **derivatives** of the packaged extract.  
+- Teaching defects in Activity 2 are seeded for the stand (mean-only gate; unbound overlay).
+- Live lab ≠ fresh nnU-Net inference.
 - Research sharing ≠ production ≠ clinical use.

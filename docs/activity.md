@@ -1,43 +1,75 @@
 # Tutorial activity guide
 
-**Audience:** medical imaging / ML researchers  
-**Format:** quick 5–10 min or full ~30 min  
+**Audience:** medical imaging / ML researchers at a MICCAI interactive stand  
+**Format:** one facilitator-led session, ~25–30 minutes  
+**Language:** participant-facing content in English
+
+## Narrative
+
+> We have built a knee MRI segmentation tool with AI assistance. Now we want to hand it over to another researcher. What should we test, how can AI help us write useful tests, and what documentation does the next person need?
 
 ## Learning goals
 
-1. Understand what the knee MRI segmentation tool inputs/outputs.  
-2. See that green tests can miss **stale result reuse** across cases.  
-3. Improve prompts/tests; review README as handover.  
-4. Separate executed evidence from samples and reveals.
+1. See what the tool inputs and outputs (cached demo, not fresh inference by default).
+2. Define expected behaviours before handover.
+3. Use two focused examples (mean Dice hide; unbound overlay) to improve test prompts and verify them.
+4. Leave a README that another researcher can run and check from.
 
-## Routes
+## Timing
 
-- **Quick:** Intro → core challenge (stale reuse) → evidence summary  
-- **Full:** Intro → core → layered testing menu → README handover → summary  
+| Activity | Time | Focus |
+|---|---|---|
+| 1 · Explore the tool | ~5 min | MRI / mask / overlay; what should we check? |
+| 2 · Generate useful tests | ~15 min | Mean Dice hide + overlay mismatch |
+| 3 · Hand over the tool | ~8 min | Incomplete README → five questions → improved README |
 
-## 0. What does this tool do?
+## Activity 1 — Explore the tool
 
-Packaged extract `examples/case_001` (downsampled). Interactive axial slices (subset exported). Cached tutorial path ≠ optional full nnU-Net inference.
+- Show input MRI, segmentation mask, and overlay.
+- Note: precomputed predictions; not fresh nnU-Net by default.
+- Discussion: what should we check before handover?
+- Transition: demos show one run; tests check behaviours repeatedly.
 
-## 1. Core — Changed input, unchanged result
+## Activity 2 — Generate useful tests
 
-Seeded defect: reuse `prediction.nii.gz` if present, without binding to the current input.  
-Teaching cases A/B derived from the packaged extract (B remaps labels) — not two patients.
+### Example 1 — Mean Dice can hide a missing structure
 
-Steps: weak tests → predict → A then B same output dir → compare → stronger regression → always-overwrite fix.
+Teaching prediction removes Lateral Tibial Cartilage (label 5). Mean Dice can still look acceptable (~0.75) while label-5 Dice = 0.
 
-## 2. Layered testing menu
+1. Vague mean-only checks **pass**.
+2. Inspect mean vs per-label.
+3. Stronger per-label gate **fails** on the faulty gate (expected failure).
+4. Corrected gate **passes** on the full packaged prediction.
 
-L1 contracts · L2 mean vs per-label / optional affine · L3 provenance.
+### Example 2 — Overlay may not match the saved segmentation
 
-## 3. README handover
+Teaching exporter writes a correct `prediction.nii.gz` but `overlay.png` from the wrong axial slice.
 
-Incomplete vs improved README; audit prompt; optional pair cold-start.
+1. File-existence checks **pass**.
+2. Compare overlay to a regenerated mid-slice overlay.
+3. Stronger content check **fails** on unbound export; **passes** when rebound.
+
+Production cached demo path stays separate; these are seeded teaching defects.
+
+## Activity 3 — Hand over the tool
+
+Incomplete README discussion → five questions → README prompt → practical task → close panel.
 
 ## Launch
 
 ```bash
 python -m pip install -e ".[test]"
 python scripts/export_intro_slices.py   # if slice assets missing
+python scripts/export_stand_samples.py  # if teaching PNGs / samples missing
 python scripts/tutorial_lab.py
 ```
+
+## Optional further examples
+
+Stale-result reuse, affine geometry, level 1–3 challenges — see `website/further.html` and `docs/vibe_coding_recipes.md`.
+
+Facilitator notes: [`docs/facilitator.md`](facilitator.md).
+
+## Caution
+
+Completing this stand does not verify the entire tool or establish clinical readiness.

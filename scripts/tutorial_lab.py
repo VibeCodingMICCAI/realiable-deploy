@@ -250,6 +250,10 @@ class LabHandler(SimpleHTTPRequestHandler):
                 if payload.get("expected_failure") or challenge_id_from(action) in {
                     "stale_regression_faulty",
                     "affine_geometry_faulty",
+                    "mean_dice_reveal",
+                    "mean_dice_regression_faulty",
+                    "overlay_reveal",
+                    "overlay_regression_faulty",
                 }:
                     status = 200
                     payload["expected_failure"] = True
@@ -289,6 +293,12 @@ def main() -> int:
     args = parser.parse_args()
 
     OUTPUTS.mkdir(parents=True, exist_ok=True)
+    try:
+        from vibe_to_trust.challenges.stand_examples import ensure_teaching_assets
+
+        ensure_teaching_assets(WEBSITE)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Note: could not ensure teaching assets ({exc})")
     server = ThreadingHTTPServer((args.host, args.port), LabHandler)
     url = f"http://{args.host}:{args.port}"
     print()

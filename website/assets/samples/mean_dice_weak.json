@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "action": "mean_dice_weak",
+  "challenge_id": "mean_dice_weak",
+  "title": "Initial checks \u00b7 mean Dice only",
+  "mode": "sample",
+  "command": "challenge:mean_dice_weak",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "mean_dice_above_threshold",
+      "pass": true,
+      "expected": "mean_dice >= 0.7",
+      "observed": 0.747473,
+      "detail": "Vague checks often stop at an aggregate score."
+    },
+    {
+      "name": "prediction_nonempty",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "labels_look_plausible",
+      "pass": true,
+      "expected": "subset of {0..5}",
+      "observed": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "detail": ""
+    }
+  ],
+  "explanation": "These checks pass while Lateral Tibial Cartilage (label 5) is entirely missing. A high mean Dice does not prove every structure is present.",
+  "meta": {
+    "gate": {
+      "accepted": true,
+      "mean_dice": 0.747473,
+      "per_label": {
+        "1": 0.988005,
+        "2": 0.885161,
+        "3": 0.988905,
+        "4": 0.875294,
+        "5": 0.0
+      },
+      "policy": "mean_only",
+      "threshold": 0.7
+    },
+    "critical_label": 5,
+    "critical_name": "Lateral Tibial Cartilage",
+    "assets": {
+      "full": "assets/teaching/mean_full.png",
+      "missing_label5": "assets/teaching/mean_missing_label5.png"
+    }
+  }
+}

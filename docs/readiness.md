@@ -1,6 +1,6 @@
 # Readiness and intended use
 
-This tutorial’s final screen is an **evidence summary**, not a readiness score.
+This stand ends with a short closing panel, not a readiness score.
 
 ```text
 Executed checks

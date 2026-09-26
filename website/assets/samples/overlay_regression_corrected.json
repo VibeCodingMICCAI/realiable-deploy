@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "action": "overlay_regression_corrected",
+  "challenge_id": "overlay_regression_corrected",
+  "title": "Stronger test \u00b7 bound overlay (corrected)",
+  "mode": "sample",
+  "command": "challenge:overlay_regression_corrected",
+  "message": "All listed checks passed.",
+  "checks": [
+    {
+      "name": "overlay_bound_to_current_prediction",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": "Overlay regenerated from the current prediction at the mid slice."
+    }
+  ],
+  "explanation": "Minimal fix: always regenerate overlay.png from the current prediction (and the intended slice index) when exporting results.",
+  "meta": {
+    "result": {
+      "ok": true,
+      "prediction": "outputs/lab/sample_gen_stand/overlay_regression_corrected/overlay_reg_ok_8c80f931/out/prediction.nii.gz",
+      "overlay": "outputs/lab/sample_gen_stand/overlay_regression_corrected/overlay_reg_ok_8c80f931/out/overlay.png",
+      "expected_overlay": "outputs/lab/sample_gen_stand/overlay_regression_corrected/overlay_reg_ok_8c80f931/out/expected_overlay.png",
+      "overlay_matches_expected": true,
+      "policy": "bind_current_prediction",
+      "overlay_z": 32,
+      "expected_z": 32,
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    }
+  }
+}

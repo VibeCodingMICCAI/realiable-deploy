@@ -8,19 +8,24 @@
   </head>
   <body>
     <main class="shell">
-      <div class="nav"><a class="btn primary" href="index.html">Open interactive tutorial</a></div>
-      <p class="eyebrow">MICCAI stand</p>
+      <div class="nav"><a class="btn primary" href="index.html">Open interactive stand</a></div>
+      <p class="eyebrow">MICCAI stand · ~25–30 min</p>
       <h1>Activity guide</h1>
-      <p class="lede">Quick 5–10 min · Full ~30 min</p>
-      <h2>Route</h2>
-      <p>Tool intro → <strong>Changed input, unchanged result</strong> → optional testing menu → README handover → evidence summary.</p>
-      <h2>Core idea</h2>
-      <p>A shortcut that reuses an existing <code>prediction.nii.gz</code> can return the wrong case’s result when the output directory is shared. Teaching defect; production cached pipeline remains separate.</p>
+      <p class="lede">One facilitator-led session · three activities</p>
+      <ol>
+        <li><strong>Explore the tool</strong> (~5 min) — MRI, mask, overlay; what should we check?</li>
+        <li><strong>Generate useful tests</strong> (~15 min) — mean Dice hide; overlay vs saved segmentation.</li>
+        <li><strong>Hand over the tool</strong> (~8 min) — README that another researcher can run and check.</li>
+      </ol>
       <h2>Launch</h2>
       <pre class="flow">python -m pip install -e ".[test]"
 python scripts/export_intro_slices.py
+python scripts/export_stand_samples.py
 python scripts/tutorial_lab.py</pre>
-      <p class="caption">See <code>docs/activity.md</code> and <code>docs/coordinator_zh.md</code>.</p>
+      <p class="caption">Full text: <code>docs/activity.md</code> · Facilitator: <code>docs/facilitator.md</code>.</p>
+      <div class="nav">
+        <a class="btn" href="further.html">Further examples</a>
+      </div>
     </main>
   </body>
 </html>

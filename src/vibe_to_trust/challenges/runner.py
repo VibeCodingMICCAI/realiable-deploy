@@ -19,9 +19,27 @@ from .stale_reuse import (
     run_stale_regression_faulty,
     run_stale_weak,
 )
+from .stand_examples import (
+    run_mean_dice_regression_corrected,
+    run_mean_dice_regression_faulty,
+    run_mean_dice_reveal,
+    run_mean_dice_weak,
+    run_overlay_regression_corrected,
+    run_overlay_regression_faulty,
+    run_overlay_reveal,
+    run_overlay_weak,
+)
 
 ALLOWED_CHALLENGES = frozenset(
     {
+        "mean_dice_weak",
+        "mean_dice_reveal",
+        "mean_dice_regression_faulty",
+        "mean_dice_regression_corrected",
+        "overlay_weak",
+        "overlay_reveal",
+        "overlay_regression_faulty",
+        "overlay_regression_corrected",
         "stale_weak",
         "stale_sequential_faulty",
         "stale_sequential_corrected",
@@ -47,6 +65,14 @@ def run_challenge(challenge_id: str, work_root: Path | None = None) -> dict:
         raise KeyError(f"challenge not allowed: {challenge_id}")
 
     mapping = {
+        "mean_dice_weak": lambda: run_mean_dice_weak(work_root),
+        "mean_dice_reveal": lambda: run_mean_dice_reveal(work_root),
+        "mean_dice_regression_faulty": lambda: run_mean_dice_regression_faulty(work_root),
+        "mean_dice_regression_corrected": lambda: run_mean_dice_regression_corrected(work_root),
+        "overlay_weak": lambda: run_overlay_weak(work_root),
+        "overlay_reveal": lambda: run_overlay_reveal(work_root),
+        "overlay_regression_faulty": lambda: run_overlay_regression_faulty(work_root),
+        "overlay_regression_corrected": lambda: run_overlay_regression_corrected(work_root),
         "stale_weak": lambda: run_stale_weak(work_root),
         "stale_sequential_faulty": lambda: run_sequential(Path(work_root or "."), reuse_existing=True),
         "stale_sequential_corrected": lambda: run_sequential(Path(work_root or "."), reuse_existing=False),

@@ -1,0 +1,67 @@
+{
+  "ok": false,
+  "action": "mean_dice_reveal",
+  "challenge_id": "mean_dice_reveal",
+  "title": "Inspect mean vs per-label Dice",
+  "mode": "sample",
+  "command": "challenge:mean_dice_reveal",
+  "message": "One or more listed checks failed.",
+  "checks": [
+    {
+      "name": "mean_still_looks_ok",
+      "pass": true,
+      "expected": "mean_dice >= 0.70",
+      "observed": 0.747473,
+      "detail": ""
+    },
+    {
+      "name": "critical_structure_present",
+      "pass": false,
+      "expected": "Lateral Tibial Cartilage Dice >= 0.5",
+      "observed": 0.0,
+      "detail": "Expected failure: label 5 was dropped in the teaching prediction."
+    }
+  ],
+  "explanation": "Mean Dice \u2248 0.747473 while Lateral Tibial Cartilage Dice = 0.0. Aggregate metrics can hide a clinically important failure.",
+  "meta": {
+    "full_prediction": {
+      "accepted": true,
+      "mean_dice": 0.917652,
+      "per_label": {
+        "1": 0.988005,
+        "2": 0.885161,
+        "3": 0.988905,
+        "4": 0.875294,
+        "5": 0.850895
+      },
+      "policy": "mean_and_per_label",
+      "mean_threshold": 0.7,
+      "per_label_threshold": 0.5,
+      "critical_label": 5,
+      "critical_name": "Lateral Tibial Cartilage",
+      "critical_dice": 0.850895
+    },
+    "teaching_prediction": {
+      "accepted": false,
+      "mean_dice": 0.747473,
+      "per_label": {
+        "1": 0.988005,
+        "2": 0.885161,
+        "3": 0.988905,
+        "4": 0.875294,
+        "5": 0.0
+      },
+      "policy": "mean_and_per_label",
+      "mean_threshold": 0.7,
+      "per_label_threshold": 0.5,
+      "critical_label": 5,
+      "critical_name": "Lateral Tibial Cartilage",
+      "critical_dice": 0.0
+    },
+    "assets": {
+      "full": "assets/teaching/mean_full.png",
+      "missing_label5": "assets/teaching/mean_missing_label5.png"
+    }
+  },
+  "expected_failure": true
+}

@@ -1,0 +1,37 @@
+{
+  "ok": false,
+  "action": "overlay_regression_faulty",
+  "challenge_id": "overlay_regression_faulty",
+  "title": "Stronger test \u00b7 unbound overlay (faulty)",
+  "mode": "sample",
+  "command": "challenge:overlay_regression_faulty",
+  "message": "Expected failure: overlay content does not match the current mid-slice prediction.",
+  "checks": [
+    {
+      "name": "overlay_bound_to_current_prediction",
+      "pass": false,
+      "expected": true,
+      "observed": false,
+      "detail": "Expected failure: teaching policy wrote an unbound / wrong-slice overlay."
+    }
+  ],
+  "explanation": "Regenerate the expected mid-slice overlay from the saved prediction and compare. Do not only assert that overlay.png exists.",
+  "meta": {
+    "result": {
+      "ok": true,
+      "prediction": "outputs/lab/sample_gen_stand/overlay_regression_faulty/overlay_reg_faulty_0292b334/out/prediction.nii.gz",
+      "overlay": "outputs/lab/sample_gen_stand/overlay_regression_faulty/overlay_reg_faulty_0292b334/out/overlay.png",
+      "expected_overlay": "outputs/lab/sample_gen_stand/overlay_regression_faulty/overlay_reg_faulty_0292b334/out/expected_overlay.png",
+      "overlay_matches_expected": false,
+      "policy": "stale_or_unbound_overlay",
+      "overlay_z": 0,
+      "expected_z": 32,
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    }
+  },
+  "expected_failure": true
+}

@@ -1,0 +1,63 @@
+{
+  "ok": false,
+  "action": "overlay_reveal",
+  "challenge_id": "overlay_reveal",
+  "title": "Inspect overlay vs saved segmentation",
+  "mode": "sample",
+  "command": "challenge:overlay_reveal",
+  "message": "One or more listed checks failed.",
+  "checks": [
+    {
+      "name": "prediction_saved",
+      "pass": true,
+      "expected": true,
+      "observed": true,
+      "detail": ""
+    },
+    {
+      "name": "overlay_matches_current_mid_slice",
+      "pass": false,
+      "expected": true,
+      "observed": false,
+      "detail": "Expected failure: overlay used z=0, inspection mid-slice is z=32."
+    }
+  ],
+  "explanation": "The NIfTI prediction can be correct while overlay.png shows a different slice. Inspection images must be regenerated from the current prediction.",
+  "meta": {
+    "faulty": {
+      "ok": true,
+      "prediction": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/bad/prediction.nii.gz",
+      "overlay": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/bad/overlay.png",
+      "expected_overlay": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/bad/expected_overlay.png",
+      "overlay_matches_expected": false,
+      "policy": "stale_or_unbound_overlay",
+      "overlay_z": 0,
+      "expected_z": 32,
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    },
+    "corrected": {
+      "ok": true,
+      "prediction": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/good/prediction.nii.gz",
+      "overlay": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/good/overlay.png",
+      "expected_overlay": "outputs/lab/sample_gen_stand/overlay_reveal/overlay_reveal_11f5ee56/good/expected_overlay.png",
+      "overlay_matches_expected": true,
+      "policy": "bind_current_prediction",
+      "overlay_z": 32,
+      "expected_z": 32,
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    },
+    "assets": {
+      "bound": "assets/teaching/overlay_bound.png",
+      "stale": "assets/teaching/overlay_stale.png"
+    }
+  },
+  "expected_failure": true
+}
