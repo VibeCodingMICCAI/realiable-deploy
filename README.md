@@ -61,8 +61,3 @@ python -m pytest -q
 
 Live lab buttons execute allowlisted Python on this machine. Sample / static mode shows **pre-recorded** results and labels them as such. Completing the stand does **not** verify the entire tool or clinical readiness.
 
-## Limitations
-
-- Teaching defects in Activity 2 are seeded for the stand (mean-only gate; unbound overlay).
-- Live lab ≠ fresh nnU-Net inference.
-- Research sharing ≠ production ≠ clinical use.
