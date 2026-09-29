@@ -1,8 +1,8 @@
 # From Vibe Coding to Trustworthy AI
 
-### Knee MRI segmentation: explore the tool, write useful tests, hand over with a README
+### Knee MRI segmentation: explore the tool and write useful tests
 
-Facilitator-led MICCAI stand (~25–30 minutes). Default path uses a **cached** downsampled extract (`examples/case_001`) — not clinical certification, and not fresh nnU-Net inference by default.
+Facilitator-led MICCAI stand (~20 minutes). Default path uses a **cached** downsampled extract (`examples/case_001`) — not clinical certification, and not fresh nnU-Net inference by default.
 
 ## Clone and run
 
@@ -44,11 +44,10 @@ Also useful: `python scripts/reproduce_example.py` → `outputs/reproduce/`.
 - **Default / stand:** precomputed prediction for the packaged case.
 - **Optional real inference:** `pip install -e ".[infer]"` and configure `VIBE_NNUNET_MODEL` — see [`model/README.md`](model/README.md).
 
-## Three activities (facilitator-led)
+## Two activities (facilitator-led)
 
-1. **Explore the tool** (~5 min) — MRI / mask / overlay; what should we check before handover?
-2. **Generate useful tests** (~15 min) — mean score can hide a missing structure; overlay may not match the saved segmentation.
-3. **Hand over the tool** (~8 min) — what a useful README must answer.
+1. **Explore the tool** (~5 min) — MRI / mask / overlay; what should we check?
+2. **Generate useful tests** (~15 min) — a good average score can hide a missing structure; the preview image may not match the saved segmentation.
 
 Guides: [`docs/activity.md`](docs/activity.md) · [`docs/facilitator.md`](docs/facilitator.md)  
 Prompt recipes (optional): [`docs/vibe_coding_recipes.md`](docs/vibe_coding_recipes.md)

@@ -1,11 +1,10 @@
 # Facilitator guide
 
-English guide for running the MICCAI stand (~25–30 minutes). Participant UI is English.
+English guide for running the MICCAI stand (~20 minutes). Participant UI is English.
 
 ## Elevator pitch
 
-> We built a knee MRI segmentation tool and want to hand it to another researcher.  
-> What should we check? How can AI help write useful tests? What belongs in the README?  
+> We built a knee MRI segmentation tool. What should we check, and how can AI help write useful tests?  
 > Default path uses a **cached** extract (not live full nnU-Net).  
 > Two teaching defects: (1) mean Dice hides a missing structure; (2) overlay PNG unbound from the mid-slice prediction.  
 > Not clinical certification.
@@ -31,9 +30,8 @@ Open `http://127.0.0.1:8000` and hard-refresh (Ctrl+F5). Confirm:
 
 | Activity | Time | Focus |
 |---|---|---|
-| 1 · Explore | ~5 min | MRI / mask / overlay; discuss what to check before handover |
+| 1 · Explore | ~5 min | MRI / mask / overlay; discuss what to check |
 | 2 · Generate tests | ~15 min | Both examples: weak checks → reveal → stronger fail/pass |
-| 3 · Hand over | ~8 min | Incomplete README → five questions → practical task |
 
 ### Example 1
 
@@ -47,5 +45,5 @@ Stale-result reuse (A then B) is optional — see Further examples.
 
 ## Close
 
-Define expected behaviour → focused test → verify it catches the defect → document how to run and check.  
+Define expected behaviour → focused test → verify it catches the defect.  
 Distinguish live execution, pre-recorded samples, and expected failures. Research sharing ≠ production ≠ clinical use.

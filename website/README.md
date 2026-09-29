@@ -1,6 +1,6 @@
 # Interactive stand website
 
-Facilitator-led three-activity session (Explore → Generate useful tests → Hand over).
+Facilitator-led two-activity session (Explore → Generate useful tests).
 
 ```bash
 python scripts/export_intro_slices.py

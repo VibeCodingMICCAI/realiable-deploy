@@ -6,17 +6,16 @@
     <title>From Vibe Coding to Trustworthy AI</title>
     <meta
       name="description"
-      content="Facilitator-led MICCAI stand: explore a knee MRI tool, write a useful test, hand over with a README."
+      content="Facilitator-led MICCAI stand: explore a knee MRI tool and write useful tests."
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header class="topbar">
-      <p class="eyebrow">MICCAI interactive stand · ~25–30 min</p>
+      <p class="eyebrow">MICCAI interactive stand · ~20 min</p>
       <nav class="main-nav" aria-label="Activities">
         <button type="button" class="nav-tab active" data-go="explore">1 · Explore the tool</button>
         <button type="button" class="nav-tab" data-go="tests">2 · Generate useful tests</button>
-        <button type="button" class="nav-tab" data-go="handover">3 · Hand over the tool</button>
       </nav>
       <div id="lab-banner" class="lab-banner" aria-live="polite"></div>
     </header>
@@ -233,102 +232,29 @@ Run the test and explain what the result demonstrates.</pre>
           </ul>
         </div>
 
-        <div class="nav">
-          <button type="button" class="btn" data-go="explore">Back</button>
-          <button type="button" class="btn primary" data-go="handover">Continue to Activity 3</button>
-        </div>
-      </section>
-
-      <!-- Activity 3 -->
-      <section id="handover" class="screen hidden">
-        <h1>Hand over the tool</h1>
-        <p class="lede">
-          The tool now has a test for the issue we found. Tomorrow you are unavailable.
-          Can another researcher run and check it using only the README?
-        </p>
-
-        <div class="panel">
-          <h2>Incomplete README</h2>
-          <pre class="code-box">Knee MRI segmentation tool.
-Install the dependencies and run demo.py.
-Results are saved in the output folder.</pre>
-          <p class="prompt-line">What would you need to ask the author before you could use this?</p>
-          <button type="button" class="btn" id="reveal-readme-qs">Show five questions a useful README answers</button>
-          <div id="readme-qs" class="reveal hidden">
-            <ol>
-              <li>What does the tool do, and what are its limitations?</li>
-              <li>How do I install and run it?</li>
-              <li>What input do I need?</li>
-              <li>What output should I expect, and where?</li>
-              <li>How do I run the checks and interpret the results?</li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h2>Ask AI to improve the README</h2>
-          <pre class="prompt-box" id="readme-prompt">Inspect this repository and improve its README for a researcher who has not used the tool before.
-
-Explain:
-1. What the tool does and its limitations.
-2. Required inputs and example data.
-3. Installation and exact commands, including the working directory.
-4. Expected output files and how to inspect them.
-5. How to run the tests and understand the results.
-
-Distinguish cached demonstration from real model inference.
-Verify commands and file paths against the repository.
-Do not invent capabilities or claim checks were run if they were not.
-Keep the README concise.</pre>
-          <button type="button" class="btn" id="copy-readme-prompt">Copy README prompt</button>
-          <button type="button" class="btn" id="reveal-readme-improved">Show improved README highlights</button>
-          <div id="readme-improved" class="reveal hidden">
-            <p><strong>Meaningful additions (aligned with this repository):</strong></p>
-            <ul class="plain-list">
-              <li>Working directory = repository root; <code>pip install -e ".[test]"</code></li>
-              <li>Exact commands: <code>python scripts/demo.py --no-open</code>, <code>python scripts/run_tests.py</code>, <code>python scripts/tutorial_lab.py</code></li>
-              <li>Expected outputs: <code>outputs/demo/prediction.nii.gz</code>, <code>outputs/demo/overlay.png</code></li>
-              <li>Cached demo vs optional real inference (<code>model/README.md</code>)</li>
-              <li>Limitations: downsampled extract; not clinical software</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="panel discuss">
-          <h2>Practical handover task</h2>
-          <p>
-            Using only the README, identify: (1) the first command to run, (2) where outputs appear,
-            (3) the command used to check the tool.
-          </p>
-        </div>
-
         <div class="panel closing">
           <h2>Close</h2>
           <ol>
             <li>Define expected behaviour.</li>
             <li>Ask AI to generate a focused test.</li>
             <li>Verify that the test detects the intended defect.</li>
-            <li>Document how the next person can run and check the tool.</li>
           </ol>
           <p class="caption">
             Completing this stand does not verify the entire tool or establish clinical readiness.
           </p>
           <div class="nav">
-            <a class="btn" href="https://github.com/VibeCodingMICCAI/realiable-deploy#readme" target="_blank" rel="noopener">Repository README</a>
             <button type="button" class="btn" id="copy-mean-prompt-footer">Copy mean-Dice prompt</button>
             <button type="button" class="btn" id="copy-overlay-prompt-footer">Copy overlay prompt</button>
-            <button type="button" class="btn" id="copy-readme-prompt-footer">Copy README prompt</button>
             <a class="btn" href="further.html">Further examples</a>
             <a class="btn" href="activity.html">Written activity guide</a>
           </div>
         </div>
 
         <div class="nav">
-          <button type="button" class="btn" data-go="tests">Back</button>
-          <button type="button" class="btn" data-go="explore">Back to start</button>
+          <button type="button" class="btn" data-go="explore">Back</button>
         </div>
       </section>
     </main>
-    <script src="script.js?v=20260922b"></script>
+    <script src="script.js?v=20260929a"></script>
   </body>
 </html>

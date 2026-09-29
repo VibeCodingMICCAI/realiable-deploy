@@ -1,5 +1,5 @@
 (() => {
-  const screens = ["explore", "tests", "handover"];
+  const screens = ["explore", "tests"];
   const state = {
     live: null,
     introMeta: null,
@@ -218,8 +218,6 @@
   wireReveal("reveal-expectations", "expectations");
   wireReveal("reveal-mean-dx", "mean-dx");
   wireReveal("reveal-overlay-dx", "overlay-dx");
-  wireReveal("reveal-readme-qs", "readme-qs");
-  wireReveal("reveal-readme-improved", "readme-improved");
 
   function copyFrom(elId, btn) {
     const el = document.getElementById(elId);
@@ -249,12 +247,6 @@
   );
   document.getElementById("copy-overlay-prompt-footer")?.addEventListener("click", (e) =>
     copyFrom("overlay-prompt", e.currentTarget)
-  );
-  document.getElementById("copy-readme-prompt")?.addEventListener("click", (e) =>
-    copyFrom("readme-prompt", e.currentTarget)
-  );
-  document.getElementById("copy-readme-prompt-footer")?.addEventListener("click", (e) =>
-    copyFrom("readme-prompt", e.currentTarget)
   );
 
   async function writeTerm(termId, path, after) {

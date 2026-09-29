@@ -1,19 +1,18 @@
 # Tutorial activity guide
 
 **Audience:** medical imaging / ML researchers at a MICCAI interactive stand  
-**Format:** one facilitator-led session, ~25–30 minutes  
+**Format:** one facilitator-led session, ~20 minutes  
 **Language:** participant-facing content in English
 
 ## Narrative
 
-> We have built a knee MRI segmentation tool with AI assistance. Now we want to hand it over to another researcher. What should we test, how can AI help us write useful tests, and what documentation does the next person need?
+> We have built a knee MRI segmentation tool with AI assistance. What should we test, and how can AI help us write useful tests?
 
 ## Learning goals
 
 1. See what the tool inputs and outputs (cached demo, not fresh inference by default).
-2. Define expected behaviours before handover.
+2. Define expected behaviours before sharing the tool.
 3. Use two focused examples (mean Dice hide; unbound overlay) to improve test prompts and verify them.
-4. Leave a README that another researcher can run and check from.
 
 ## Timing
 
@@ -21,13 +20,12 @@
 |---|---|---|
 | 1 · Explore the tool | ~5 min | MRI / mask / overlay; what should we check? |
 | 2 · Generate useful tests | ~15 min | Mean Dice hide + overlay mismatch |
-| 3 · Hand over the tool | ~8 min | Incomplete README → five questions → improved README |
 
 ## Activity 1 — Explore the tool
 
 - Show input MRI, segmentation mask, and overlay.
 - Note: precomputed predictions; not fresh nnU-Net by default.
-- Discussion: what should we check before handover?
+- Discussion: what should we check?
 - Transition: demos show one run; tests check behaviours repeatedly.
 
 ## Activity 2 — Generate useful tests
@@ -51,9 +49,7 @@ Teaching exporter writes a correct `prediction.nii.gz` but `overlay.png` from th
 
 Production cached demo path stays separate; these are seeded teaching defects.
 
-## Activity 3 — Hand over the tool
-
-Incomplete README discussion → five questions → README prompt → practical task → close panel.
+Close on the same page: define expected behaviour, generate a focused test, verify it detects the defect.
 
 ## Launch
 
