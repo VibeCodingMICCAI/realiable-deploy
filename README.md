@@ -4,7 +4,13 @@
 
 Facilitator-led MICCAI stand (~20 minutes). Default path uses a **cached** downsampled extract (`examples/case_001`) — not clinical certification, and not fresh nnU-Net inference by default.
 
-## Clone and run
+## Open the interactive stand
+
+**[Open the website](https://vibecodingmiccai.github.io/realiable-deploy/)**
+
+Click the link and use the two activities in the browser: explore the MRI viewer, then run the teaching checks. On this public site the check buttons show **pre-recorded** results (labelled in the page). They do not run Python on your computer.
+
+## Clone and run locally
 
 ```bash
 git clone https://github.com/VibeCodingMICCAI/realiable-deploy.git
