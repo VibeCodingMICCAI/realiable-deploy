@@ -2,7 +2,7 @@
 
 ### Knee MRI segmentation: explore the tool and write useful tests
 
-**Website:** https://vibecodingmiccai.github.io/realiable-deploy/
+**Website:** https://vibecodingmiccai.github.io/stand2_realiable-deploy/
 
 Open that link to use the stand in the browser: explore the MRI viewer, then run the teaching checks. On this public site the check buttons show **pre-recorded** results (labelled on the page). They do not run Python on your computer.
 
@@ -11,8 +11,8 @@ Facilitator-led MICCAI stand (~20 minutes). Default path uses a **cached** downs
 ## Clone and run locally
 
 ```bash
-git clone https://github.com/VibeCodingMICCAI/realiable-deploy.git
-cd realiable-deploy
+git clone https://github.com/VibeCodingMICCAI/stand2_realiable-deploy.git
+cd stand2_realiable-deploy
 python -m pip install -e ".[test]"
 python scripts/tutorial_lab.py
 ```
