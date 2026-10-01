@@ -242,11 +242,8 @@
   document.getElementById("copy-overlay-prompt")?.addEventListener("click", (e) =>
     copyFrom("overlay-prompt", e.currentTarget)
   );
-  document.getElementById("copy-mean-prompt-footer")?.addEventListener("click", (e) =>
-    copyFrom("mean-prompt", e.currentTarget)
-  );
-  document.getElementById("copy-overlay-prompt-footer")?.addEventListener("click", (e) =>
-    copyFrom("overlay-prompt", e.currentTarget)
+  document.getElementById("copy-suite-prompt")?.addEventListener("click", (e) =>
+    copyFrom("suite-prompt", e.currentTarget)
   );
 
   async function writeTerm(termId, path, after) {

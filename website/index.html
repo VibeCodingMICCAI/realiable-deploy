@@ -234,20 +234,23 @@ Run the test and explain what the result demonstrates.</pre>
 
         <div class="panel closing">
           <h2>Close</h2>
-          <ol>
-            <li>Define expected behaviour.</li>
-            <li>Ask AI to generate a focused test.</li>
-            <li>Verify that the test detects the intended defect.</li>
-          </ol>
-          <p class="caption">
-            Completing this stand does not verify the entire tool or establish clinical readiness.
-          </p>
+          <p>AI makes it easy to write the tool. Use it to write a broader set of tests, not one check.</p>
+          <pre class="prompt-box" id="suite-prompt">Write a pytest file for this knee MRI segmentation tool. Cover these behaviours:
+
+1. A valid input produces a readable segmentation with the right shape and labels.
+2. A missing or invalid input fails with a clear error.
+3. A high average score is not enough. Each structure, including cartilage label 5, must be checked on its own.
+4. The preview image must match the saved segmentation, not only exist as a file.
+
+Use the packaged example. Do not change it. Do not only check that files exist or that the average score is high. Run the tests and say which behaviours they cover.</pre>
           <div class="nav">
-            <button type="button" class="btn" id="copy-mean-prompt-footer">Copy mean-Dice prompt</button>
-            <button type="button" class="btn" id="copy-overlay-prompt-footer">Copy overlay prompt</button>
+            <button type="button" class="btn" id="copy-suite-prompt">Copy prompt</button>
             <a class="btn" href="further.html">Further examples</a>
             <a class="btn" href="activity.html">Written activity guide</a>
           </div>
+          <p class="caption">
+            Completing this stand does not verify the entire tool or establish clinical readiness.
+          </p>
         </div>
 
         <div class="nav">
@@ -255,6 +258,6 @@ Run the test and explain what the result demonstrates.</pre>
         </div>
       </section>
     </main>
-    <script src="script.js?v=20260929a"></script>
+    <script src="script.js?v=20261001a"></script>
   </body>
 </html>

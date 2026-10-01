@@ -64,3 +64,18 @@ python -m pytest -q
 
 Live lab buttons execute allowlisted Python on this machine. Sample / static mode shows **pre-recorded** results and labels them as such. Completing the stand does **not** verify the entire tool or clinical readiness.
 
+## Prompt for a test set
+
+AI makes it easy to write the tool. Use it to write a broader set of tests, not one check.
+
+```text
+Write a pytest file for this knee MRI segmentation tool. Cover these behaviours:
+
+1. A valid input produces a readable segmentation with the right shape and labels.
+2. A missing or invalid input fails with a clear error.
+3. A high average score is not enough. Each structure, including cartilage label 5, must be checked on its own.
+4. The preview image must match the saved segmentation, not only exist as a file.
+
+Use the packaged example. Do not change it. Do not only check that files exist or that the average score is high. Run the tests and say which behaviours they cover.
+```
+
